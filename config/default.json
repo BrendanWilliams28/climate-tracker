@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://dbAdmin:williamsPact28@climatecluster-cmmza.mongodb.net/test?retryWrites=true&w=majority"
+}
