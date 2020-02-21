@@ -1,4 +1,5 @@
 {
   "mongoURI": "mongodb+srv://dbAdmin:williamsPact28@climatecluster-cmmza.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "climateTrackerSecretToken28"
+  "jwtSecret": "climateTrackerSecretToken28",
+  "climateAuth": "Token 37b3c29abe1fbaf9491d0184d8910a90575bf41d"
 }
