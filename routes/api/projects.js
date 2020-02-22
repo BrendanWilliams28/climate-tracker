@@ -11,7 +11,7 @@ const User = require('../../models/User');
 const Project = require('../../models/Project');
 
 // @route   POST api/projects
-// @desc    TEST route
+// @desc    Create project
 // @access  Private
 router.post(
   '/',
@@ -115,5 +115,93 @@ router.post(
     }
   }
 );
+
+// @route  GET api/projects
+// @desc   Get all projects
+// @access Private
+router.get('/', auth, async (req, res) => {
+  try {
+    const projects = await Project.find().sort({ title: 1 });
+    res.json(projects);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route  GET api/projects/user
+// @desc   Get current users projects
+// @access Private
+router.get('/user', auth, async (req, res) => {
+  try {
+    const projects = await Project.find({ user: req.user.id });
+
+    if (!projects) {
+      return res
+        .status(400)
+        .json({ msg: 'There are no projects for this user' });
+    }
+
+    res.json(projects);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route  GET api/projects/:id
+// @desc   Get projects by ID
+// @access Private
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: 'Project not found' });
+    }
+
+    res.json(project);
+  } catch (error) {
+    console.error(error.message);
+
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Project not found' });
+    }
+
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route  DELETE api/projects/:id
+// @desc   Delete a project
+// @access Private
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: 'Project not found' });
+    }
+
+    // Check user
+    if (project.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+
+    await project.remove();
+
+    res.json({ msg: 'Project removed' });
+  } catch (error) {
+    console.error(error.message);
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Project not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route  PUT api/projects/:id
+// @desc   Edit a project
+// @access Private
 
 module.exports = router;
