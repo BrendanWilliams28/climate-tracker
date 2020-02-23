@@ -3,10 +3,12 @@ const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const auth = require('../../middleware/auth');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
+const Project = require('../../models/Project');
 
 // @route   POST api/users
 // @desc    Register user
@@ -85,5 +87,36 @@ router.post(
     }
   }
 );
+
+// @route   GET api/users/list
+// @desc    Get all users
+// @access  Public
+router.get('/list', auth, async (req, res) => {
+  try {
+    const users = await User.find().select('-password');
+    res.json(users);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   DELETE api/users
+// @desc    Delete user and projects
+// @access  Private
+router.delete('/', auth, async (req, res) => {
+  try {
+    // Remove users projects
+    await Project.deleteMany({ user: req.user.id });
+
+    // Remove user
+    await User.findOneAndRemove({ _id: req.user.id });
+
+    res.json({ msg: 'User deleted' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;

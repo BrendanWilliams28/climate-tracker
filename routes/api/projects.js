@@ -5,8 +5,6 @@ const auth = require('../../middleware/auth');
 const config = require('config');
 const axios = require('axios');
 
-const util = require('util');
-
 const User = require('../../models/User');
 const Project = require('../../models/Project');
 
@@ -168,6 +166,30 @@ router.get('/:id', auth, async (req, res) => {
       return res.status(404).json({ msg: 'Project not found' });
     }
 
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route  GET api/projects/user/:use_id
+// @desc   Get projects by user ID
+// @access Private
+router.get('/user/:user_id', auth, async (req, res) => {
+  try {
+    const projects = await Project.find({
+      user: req.params.user_id
+    }).populate('users', ['name', 'email']);
+
+    if (!projects)
+      return res
+        .status(400)
+        .json({ msg: 'There are no projects for this user' });
+
+    res.json(projects);
+  } catch (error) {
+    console.error(error.message);
+    if (error.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'User not found' });
+    }
     res.status(500).send('Server Error');
   }
 });
