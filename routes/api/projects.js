@@ -114,6 +114,81 @@ router.post(
   }
 );
 
+// @route    PUT api/projects
+// @desc     Edit a project
+// @access   Private
+router.put(
+  '/:id',
+  [
+    auth,
+    [
+      check('title', 'Title is required')
+        .not()
+        .isEmpty(),
+      check('city', 'City is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const project = await Project.findById(req.params.id);
+
+      if (!project) {
+        return res.status(404).json({ msg: 'Project not found' });
+      }
+
+      let { title, city } = req.body;
+
+      // Get City ID
+      let cityId = null;
+      let location = city.split(', ');
+      try {
+        const response = await axios({
+          method: 'get',
+          url: 'https://app.climate.azavea.com/api/city',
+          headers: {
+            Authorization: config.get('climateAuth')
+          },
+          params: {
+            name: location[0],
+            admin: location[1]
+          }
+        });
+
+        cityId = response.data.features[0].id;
+      } catch (error) {
+        console.error(error);
+      }
+
+      try {
+        project.title = title;
+        project.cityId = cityId;
+
+        await project.save();
+
+        res.json({ msg: 'Project updated' });
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+      }
+    } catch (error) {
+      console.error(error.message);
+
+      if (error.kind === 'ObjectId') {
+        return res.status(404).json({ msg: 'Project not found' });
+      }
+
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 // @route  GET api/projects
 // @desc   Get all projects
 // @access Private
