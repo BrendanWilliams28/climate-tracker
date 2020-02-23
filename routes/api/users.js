@@ -88,6 +88,43 @@ router.post(
   }
 );
 
+// @route    PUT api/users
+// @desc     Edit a user
+// @access   Private
+router.put(
+  '/',
+  [
+    auth,
+    [
+      check('name', 'Name is required')
+        .not()
+        .isEmpty(),
+      check('email', 'Please include a valid email').isEmail()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    let { name, email } = req.body;
+    try {
+      const user = await User.findById(req.user.id);
+
+      user.name = name;
+      user.email = email;
+
+      await user.save();
+
+      res.json({ msg: 'User updated' });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 // @route   GET api/users/list
 // @desc    Get all users
 // @access  Public
