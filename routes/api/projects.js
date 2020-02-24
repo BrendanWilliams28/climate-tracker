@@ -92,8 +92,6 @@ router.post(
 
     // Save default Climate API settings
     try {
-      const user = await User.findById(req.user.id).select('-password');
-
       const newProject = new Project({
         user: req.user.id,
         title,
@@ -296,9 +294,5 @@ router.delete('/:id', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-
-// @route  PUT api/projects/:id
-// @desc   Edit a project
-// @access Private
 
 module.exports = router;
