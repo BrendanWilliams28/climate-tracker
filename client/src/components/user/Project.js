@@ -1,7 +1,8 @@
 import React from 'react';
+import ProjectActions from './ProjectActions';
 import PropTypes from 'prop-types';
 
-const Project = ({ project: { title, description, updatedAt } }) => (
+const Project = ({ project: { _id, title, description, updatedAt } }) => (
   <div>
     <h3 className='text-dark'>{title}</h3>
     <p>
@@ -11,6 +12,8 @@ const Project = ({ project: { title, description, updatedAt } }) => (
       <strong>Last Update: </strong> {updatedAt}
     </p>
 
+    <ProjectActions _id={_id} />
+    <br />
     <hr />
   </div>
 );

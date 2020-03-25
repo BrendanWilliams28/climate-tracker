@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Project from '../user/Project';
+import Project from './Project';
 import Spinner from '../layout/Spinner';
 import { getUserProjects } from '../../actions/projects';
 
