@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProjectList from '../user/ProjectList';
@@ -10,6 +11,12 @@ const Dashboard = ({ auth: { user } }) => {
       <p className='lead'>
         <i className='fas fa-user' /> Welcome, {user && user.name}
       </p>
+      <Fragment>
+        <Link to='/create-project' className='btn btn-primary my-1'>
+          Create Project
+        </Link>
+      </Fragment>
+      <hr />
       <ProjectList />
     </Fragment>
   );
