@@ -64,6 +64,23 @@ export const getCurrentProject = projectId => async dispatch => {
   }
 };
 
+// Get project by ID
+export const getProjectById = projectId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/projects/${projectId}`);
+
+    dispatch({
+      type: GET_PROJECT,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
 // Get user's project list
 export const getUserProjects = () => async dispatch => {
   try {
