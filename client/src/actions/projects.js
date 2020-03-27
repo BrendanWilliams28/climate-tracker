@@ -3,6 +3,7 @@ import { setAlert } from './alert';
 
 import {
   GET_PROJECT,
+  DELETE_PROJECT,
   PROJECT_ERROR,
   GET_PROJECTS,
   PROJECTS_ERROR
@@ -93,6 +94,25 @@ export const getUserProjects = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: PROJECTS_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+// Delete project
+export const deleteProject = projectId => async dispatch => {
+  try {
+    await axios.delete(`/api/projects/${projectId}`);
+
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: projectId
+    });
+
+    dispatch(setAlert('Project Deleted', 'success'));
+  } catch (error) {
+    dispatch({
+      type: PROJECT_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status }
     });
   }

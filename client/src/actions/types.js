@@ -13,3 +13,4 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const PROJECTS_ERROR = 'PROJECTS_ERROR';
 export const GET_USER = 'GET_USER';
 export const USER_ERROR = 'USER_ERROR';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
