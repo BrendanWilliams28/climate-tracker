@@ -6,10 +6,11 @@ import {
   DELETE_PROJECT,
   PROJECT_ERROR,
   GET_PROJECTS,
-  PROJECTS_ERROR
+  PROJECTS_ERROR,
+  CLEAR_PROJECT
 } from './types';
 
-// Create or update project
+// Create project
 export const createProject = (
   formData,
   history,
@@ -34,6 +35,44 @@ export const createProject = (
     if (!edit) {
       history.push('/dashboard');
     }
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Update project
+export const updateProject = (
+  projectId,
+  formData,
+  history,
+  edit = false
+) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.put(`/api/projects/${projectId}`, formData, config);
+
+    dispatch({
+      type: GET_PROJECT,
+      payload: res.data
+    });
+
+    dispatch(setAlert(edit ? 'Project Updated' : 'Project Created', 'success'));
+
+    history.push('/dashboard');
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -84,6 +123,8 @@ export const getProjectById = projectId => async dispatch => {
 
 // Get user's project list
 export const getUserProjects = () => async dispatch => {
+  dispatch({ type: CLEAR_PROJECT });
+
   try {
     const res = await axios.get('/api/projects/user');
 
@@ -103,6 +144,8 @@ export const getUserProjects = () => async dispatch => {
 export const deleteProject = projectId => async dispatch => {
   try {
     await axios.delete(`/api/projects/${projectId}`);
+
+    dispatch({ type: CLEAR_PROJECT });
 
     dispatch({
       type: DELETE_PROJECT,
