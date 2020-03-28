@@ -4,9 +4,9 @@ import Register from '../auth/Register';
 import Login from '../auth/Login';
 import Alert from '../layout/Alert';
 import Dashboard from '../dashboard/Dashboard';
-import CreateProject from '../user/CreateProject';
-import EditProject from '../user/EditProject';
-import ViewProject from '../user/ViewProject';
+import CreateProject from '../projects/CreateProject';
+import EditProject from '../projects/EditProject';
+import ViewProject from '../projects/ViewProject';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from './PrivateRoute';
 

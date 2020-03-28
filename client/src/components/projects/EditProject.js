@@ -28,7 +28,7 @@ const EditProject = ({
       }
       setFormData(projectData);
     }
-  }, [loading, getProjectById, project]);
+  }, [loading, getProjectById, project, match.params.id]);
 
   const { title, description, city } = formData;
 

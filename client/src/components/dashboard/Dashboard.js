@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ProjectList from '../user/ProjectList';
+import ProjectList from '../projects/ProjectList';
 
 const Dashboard = ({ auth: { user } }) => {
   return (
