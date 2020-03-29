@@ -23,10 +23,11 @@ export const Profile = ({ getCurrentUser, user: { user, loading }, auth }) => {
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === user._id && (
-              <Link to={`/edit-profile/${user._id}`} className='btn btn-dark'>
+              <Link to={'/edit-profile'} className='btn btn-dark'>
                 Edit Profile
               </Link>
             )}
+          <br />
           <br />
           <div className='profile bg-light'>
             <img src={user.avatar} alt='avatar' className='round-img' />
