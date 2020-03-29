@@ -30,14 +30,14 @@ export const Profile = ({
             auth.user._id === user._id && (
               <Fragment>
                 <Link to={'/edit-profile'} className='btn btn-dark'>
-                  Edit Profile
+                  <i className='fas fa-edit text-default' /> Edit Profile
                 </Link>
                 <button
                   onClick={() => deleteUser(user._id)}
                   type='button'
                   className='btn btn-danger'
                 >
-                  <i className='fas fa-times' />
+                  <i className='fas fa-times' /> Delete Account
                 </button>
               </Fragment>
             )}

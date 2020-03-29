@@ -1,6 +1,8 @@
 import {
   GET_USER,
   USER_ERROR,
+  GET_USERS,
+  USERS_ERROR,
   CLEAR_USER,
   DELETE_USER
 } from '../actions/types';
@@ -23,6 +25,18 @@ export default function(state = initialState, action) {
         loading: false
       };
     case USER_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false
+      };
+    case GET_USERS:
+      return {
+        ...state,
+        users: payload,
+        loading: false
+      };
+    case USERS_ERROR:
       return {
         ...state,
         error: payload,

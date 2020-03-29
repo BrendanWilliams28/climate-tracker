@@ -1,7 +1,16 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { GET_USER, USER_ERROR, CLEAR_USER, DELETE_USER, LOGOUT } from './types';
+import {
+  GET_USER,
+  USER_ERROR,
+  GET_USERS,
+  USERS_ERROR,
+  CLEAR_USER,
+  CLEAR_USERS,
+  DELETE_USER,
+  LOGOUT
+} from './types';
 
 // Get current User
 export const getCurrentUser = () => async dispatch => {
@@ -71,6 +80,26 @@ export const deleteUser = userId => async dispatch => {
   } catch (error) {
     dispatch({
       type: USER_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+// Get all users
+export const getUsers = () => async dispatch => {
+  dispatch({
+    type: CLEAR_USERS
+  });
+  try {
+    const res = await axios.get('/api/users/list');
+
+    dispatch({
+      type: GET_USERS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: USERS_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status }
     });
   }
