@@ -10,6 +10,7 @@ export const LOGOUT = 'LOGOUT';
 export const GET_USER = 'GET_USER';
 export const USER_ERROR = 'USER_ERROR';
 export const CLEAR_USER = 'CLEAR_USER';
+export const DELETE_USER = 'DELETE_USER';
 export const GET_PROJECT = 'GET_PROJECT';
 export const PROJECT_ERROR = 'PROJECT_ERROR';
 export const GET_PROJECTS = 'GET_PROJECTS';

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { GET_USER, USER_ERROR } from './types';
+import { GET_USER, USER_ERROR, CLEAR_USER, DELETE_USER, LOGOUT } from './types';
 
 // Get current User
 export const getCurrentUser = () => async dispatch => {
@@ -46,6 +46,29 @@ export const updateProfile = (formData, history) => async dispatch => {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
+    dispatch({
+      type: USER_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+// Delete user & projects
+export const deleteUser = userId => async dispatch => {
+  try {
+    await axios.delete('/api/users');
+
+    dispatch({ type: CLEAR_USER });
+
+    dispatch({
+      type: DELETE_USER,
+      payload: userId
+    });
+
+    dispatch({ type: LOGOUT });
+
+    dispatch(setAlert('User Deleted', 'success'));
+  } catch (error) {
     dispatch({
       type: USER_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status }
