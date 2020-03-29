@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import User from './User';
 import Spinner from '../layout/Spinner';
 import { getCurrentUser, deleteUser } from '../../actions/user';
 
@@ -44,13 +45,7 @@ export const Profile = ({
 
           <br />
           <br />
-          <div className='profile bg-light'>
-            <img src={user.avatar} alt='avatar' className='round-img' />
-            <div>
-              <h2>{user.name}</h2>
-              <p>{user.email}</p>
-            </div>
-          </div>
+          <User key={user._id} user={user} />
         </Fragment>
       )}
     </Fragment>
