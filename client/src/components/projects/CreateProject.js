@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import LocationSearchInput from './LocationSearchInput';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProject } from '../../actions/projects';
@@ -11,7 +12,7 @@ const CreateProject = ({ createProject, history }) => {
     city: ''
   });
 
-  const { title, description, city } = formData;
+  const { title, description } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,6 +20,11 @@ const CreateProject = ({ createProject, history }) => {
   const onSubmit = e => {
     e.preventDefault();
     createProject(formData, history);
+  };
+
+  // Get the city from the LocationSearchInput autocomplete component and save it to state
+  const setFormLocation = (target, googleLocation) => {
+    setFormData({ ...formData, [target]: googleLocation });
   };
 
   return (
@@ -29,7 +35,7 @@ const CreateProject = ({ createProject, history }) => {
         climate.
       </p>
       <small>* = required field</small>
-      <form className='form' onSubmit={onSubmit}>
+      <form className='form' onSubmit={onSubmit} autoComplete='off'>
         <div className='form-group'>
           <input
             type='text'
@@ -51,17 +57,7 @@ const CreateProject = ({ createProject, history }) => {
           />
         </div>
         <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Location'
-            name='city'
-            value={city}
-            onChange={onChange}
-            required
-          />
-          <small className='form-text'>
-            US City & state required (eg. Boston, MA)
-          </small>
+          <LocationSearchInput setFormLocation={setFormLocation} />
         </div>
 
         <input type='submit' className='btn btn-primary my-1' />
