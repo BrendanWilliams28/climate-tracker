@@ -1,11 +1,18 @@
 import React, { useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import LocationSearchInput from './LocationSearchInput';
+import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProject } from '../../actions/projects';
 
+import { useScript } from '../../hooks/useScript';
+
 const CreateProject = ({ createProject, history }) => {
+  const [scriptLoaded, scriptError] = useScript(
+    `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&libraries=places`
+  );
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -56,9 +63,13 @@ const CreateProject = ({ createProject, history }) => {
             required
           />
         </div>
-        <div className='form-group'>
-          <LocationSearchInput setFormLocation={setFormLocation} />
-        </div>
+        {scriptLoaded && !scriptError ? (
+          <div className='form-group'>
+            <LocationSearchInput setFormLocation={setFormLocation} />
+          </div>
+        ) : (
+          <Spinner />
+        )}
 
         <input type='submit' className='btn btn-primary my-1' />
         <Link className='btn btn-light my-1' to='/dashboard'>
