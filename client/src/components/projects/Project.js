@@ -2,11 +2,14 @@ import React from 'react';
 import ProjectActions from './ProjectActions';
 import PropTypes from 'prop-types';
 
-const Project = ({ project: { _id, title, description, updatedAt } }) => (
+const Project = ({ project: { _id, title, description, city, updatedAt } }) => (
   <div>
     <h3 className='text-dark'>{title}</h3>
     <p>
       <strong>Description: </strong> {description}
+    </p>
+    <p>
+      <strong>City: </strong> {city}
     </p>
     <p>
       <strong>Last Update: </strong> {updatedAt}

@@ -97,6 +97,7 @@ router.post(
         title,
         description,
         cityId,
+        city,
         scenario,
         dataSet,
         dataModels
@@ -167,6 +168,7 @@ router.put(
       try {
         project.title = title;
         project.cityId = cityId;
+        project.city = city;
 
         await project.save();
 

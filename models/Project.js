@@ -19,6 +19,10 @@ const ProjectSchema = new Schema(
       type: Number,
       required: true
     },
+    city: {
+      type: String,
+      required: true
+    },
     scenario: {
       type: String,
       required: true
