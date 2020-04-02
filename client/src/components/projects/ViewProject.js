@@ -41,6 +41,9 @@ const ViewProject = ({
               <strong>Description: </strong> {project.description}
             </p>
             <p>
+              <strong>City: </strong> {project.city}
+            </p>
+            <p>
               <strong>Last Update: </strong> {project.updatedAt}
             </p>
           </div>
