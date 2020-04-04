@@ -10,6 +10,7 @@ import ViewUsers from '../user/ViewUsers';
 import CreateProject from '../projects/CreateProject';
 import EditProject from '../projects/EditProject';
 import ViewProject from '../projects/ViewProject';
+import ClimateData from '../climate/ClimateData';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from './PrivateRoute';
 
@@ -27,6 +28,7 @@ const Routes = () => {
         <PrivateRoute exact path='/create-project' component={CreateProject} />
         <PrivateRoute exact path='/edit-project/:id' component={EditProject} />
         <PrivateRoute exact path='/view-project/:id' component={ViewProject} />
+        <PrivateRoute exact path='/climate' component={ClimateData} />
         <Route component={NotFound} />
       </Switch>
     </section>
