@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   indicatorList: [],
-  indicatorByCity: null,
+  indicatorByCity: {},
   loading: true,
   error: {}
 };

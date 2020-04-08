@@ -1,18 +1,23 @@
 import React, { useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-import { getIndicatorList } from '../../actions/climate';
+import { getIndicatorList, getIndicatorByCity } from '../../actions/climate';
 
 const IndicatorList = ({
   getIndicatorList,
   auth: { user },
-  climateList: { indicatorList, loading }
+  climateList: { indicatorList, loading },
+  getIndicatorByCity,
+  cityId
 }) => {
   useEffect(() => {
     getIndicatorList();
   }, [getIndicatorList]);
+
+  const setIndicator = indicator => {
+    getIndicatorByCity(cityId, undefined, indicator);
+  };
 
   return loading ? (
     <Spinner />
@@ -23,10 +28,9 @@ const IndicatorList = ({
           <ul>
             {indicatorList.map(indicator => (
               <li key={indicator.name}>
-                <Link to={`/climate-data/${indicator.name}`}>
-                  {' '}
-                  {indicator.label}{' '}
-                </Link>
+                <a href='#!' onClick={() => setIndicator(indicator.name)}>
+                  {indicator.label}
+                </a>
                 <br />- {indicator.description}
               </li>
             ))}
@@ -41,11 +45,15 @@ const IndicatorList = ({
 
 IndicatorList.propTypes = {
   auth: PropTypes.object.isRequired,
-  climateList: PropTypes.object.isRequired
+  climateList: PropTypes.object.isRequired,
+  cityId: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
   climateList: state.climate
 });
-export default connect(mapStateToProps, { getIndicatorList })(IndicatorList);
+export default connect(mapStateToProps, {
+  getIndicatorList,
+  getIndicatorByCity
+})(IndicatorList);

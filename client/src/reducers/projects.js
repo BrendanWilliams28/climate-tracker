@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   projects: [],
-  project: null,
+  project: {},
   loading: true,
   error: {}
 };

@@ -19,7 +19,7 @@ export const getIndicatorList = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: INDICATOR_LIST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response, status: err.response.status }
     });
   }
 };
@@ -28,7 +28,7 @@ export const getIndicatorList = () => async dispatch => {
 export const getIndicatorByCity = (
   city,
   scenario = 'RCP85',
-  indicator_name
+  indicator_name = 'accumulated_freezing_degree_days'
 ) => async dispatch => {
   try {
     const res = await axios.get(
@@ -42,7 +42,7 @@ export const getIndicatorByCity = (
   } catch (err) {
     dispatch({
       type: INDICATOR_BY_CITY_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response, status: err.response.status }
     });
   }
 };

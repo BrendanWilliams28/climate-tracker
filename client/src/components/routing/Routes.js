@@ -28,7 +28,7 @@ const Routes = () => {
         <PrivateRoute exact path='/create-project' component={CreateProject} />
         <PrivateRoute exact path='/edit-project/:id' component={EditProject} />
         <PrivateRoute exact path='/view-project/:id' component={ViewProject} />
-        <PrivateRoute exact path='/climate' component={ClimateData} />
+        <PrivateRoute exact path='/climate/:id' component={ClimateData} />
         <Route component={NotFound} />
       </Switch>
     </section>
