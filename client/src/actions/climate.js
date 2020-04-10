@@ -4,7 +4,8 @@ import {
   GET_INDICATOR_LIST,
   INDICATOR_LIST_ERROR,
   GET_INDICATOR_BY_CITY,
-  INDICATOR_BY_CITY_ERROR
+  INDICATOR_BY_CITY_ERROR,
+  CLEAR_INDICATOR_BY_CITY
 } from './types';
 
 // Get climate indicator list
@@ -30,6 +31,7 @@ export const getIndicatorByCity = (
   scenario = 'RCP85',
   indicator_name = 'accumulated_freezing_degree_days'
 ) => async dispatch => {
+  dispatch({ type: CLEAR_INDICATOR_BY_CITY });
   try {
     const res = await axios.get(
       `/api/climate/climate-data/${city}/${scenario}/indicator/${indicator_name}`

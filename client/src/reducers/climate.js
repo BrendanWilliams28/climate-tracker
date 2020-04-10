@@ -2,7 +2,8 @@ import {
   GET_INDICATOR_LIST,
   INDICATOR_LIST_ERROR,
   GET_INDICATOR_BY_CITY,
-  INDICATOR_BY_CITY_ERROR
+  INDICATOR_BY_CITY_ERROR,
+  CLEAR_INDICATOR_BY_CITY
 } from '../actions/types';
 
 const initialState = {
@@ -38,6 +39,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         error: payload,
+        loading: false
+      };
+    case CLEAR_INDICATOR_BY_CITY:
+      return {
+        ...state,
+        indicatorByCity: {},
         loading: false
       };
     default:
