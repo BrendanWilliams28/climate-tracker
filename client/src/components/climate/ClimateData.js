@@ -13,7 +13,7 @@ const ClimateData = ({
   getProjectById,
   getIndicatorByCity,
   project: { project, loading },
-  indicatorByCity,
+  indicatorByCity: { indicatorByCity, loading: indicatorByCityLoading },
   auth,
   match
 }) => {
@@ -40,6 +40,14 @@ const ClimateData = ({
           </Link>
 
           <h1 className='large text-primary'>{`Climate Data for ${project.city}`}</h1>
+          <Fragment>
+            {Object.keys(indicatorByCity).length === 0 ||
+            indicatorByCityLoading ? (
+              <Spinner />
+            ) : (
+              <Fragment>{`${indicatorByCity.indicator.label}`}</Fragment>
+            )}
+          </Fragment>
           <IndicatorList cityId={project.cityId} />
         </Fragment>
       )}
