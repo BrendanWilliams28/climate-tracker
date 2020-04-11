@@ -9,7 +9,8 @@ const IndicatorList = ({
   auth: { user },
   climateList: { indicatorList, loading },
   getIndicatorByCity,
-  cityId
+  cityId,
+  defaultValue
 }) => {
   useEffect(() => {
     getIndicatorList();
@@ -25,16 +26,20 @@ const IndicatorList = ({
     <Fragment>
       {indicatorList.length > 0 ? (
         <Fragment>
-          <ul>
+          <select
+            defaultValue={defaultValue}
+            onChange={e => setIndicator(e.currentTarget.value)}
+            disabled={loading}
+          >
+            <option key='' value=''>
+              Select
+            </option>
             {indicatorList.map(indicator => (
-              <li key={indicator.name}>
-                <a href='#!' onClick={() => setIndicator(indicator.name)}>
-                  {indicator.label}
-                </a>
-                <br />- {indicator.description}
-              </li>
+              <option key={indicator.name} value={indicator.name}>
+                {indicator.label}
+              </option>
             ))}
-          </ul>
+          </select>
         </Fragment>
       ) : (
         <h4>No climate indicators loaded</h4>

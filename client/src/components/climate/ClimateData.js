@@ -45,10 +45,16 @@ const ClimateData = ({
             indicatorByCityLoading ? (
               <Spinner />
             ) : (
-              <Fragment>{`${indicatorByCity.indicator.label}`}</Fragment>
+              <Fragment>
+                {`${indicatorByCity.indicator.label}`}
+                <p></p>
+                <IndicatorList
+                  cityId={project.cityId}
+                  defaultValue={`${indicatorByCity.indicator.name}`}
+                />
+              </Fragment>
             )}
           </Fragment>
-          <IndicatorList cityId={project.cityId} />
         </Fragment>
       )}
     </Fragment>
