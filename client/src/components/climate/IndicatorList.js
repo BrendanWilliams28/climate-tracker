@@ -13,8 +13,8 @@ const IndicatorList = ({
   defaultValue
 }) => {
   useEffect(() => {
-    getIndicatorList();
-  }, [getIndicatorList]);
+    if (indicatorList.length === 0) getIndicatorList();
+  }, [getIndicatorList, indicatorList.length]);
 
   const setIndicator = indicator => {
     getIndicatorByCity(cityId, undefined, indicator);
