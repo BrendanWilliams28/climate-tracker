@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import IndicatorList from './IndicatorList';
 import Spinner from '../layout/Spinner';
+import LineChart from '../charts/LineChart';
 import { getProjectById } from '../../actions/projects';
 import { getIndicatorByCity } from '../../actions/climate';
 
@@ -29,6 +30,11 @@ const ClimateData = ({
     }
   }, [isMounted, getIndicatorByCity, project]);
 
+  useEffect(() => {
+    if (indicatorByCity) {
+    }
+  }, [indicatorByCity]);
+
   return (
     <Fragment>
       {project === null || loading ? (
@@ -46,12 +52,15 @@ const ClimateData = ({
               <Spinner />
             ) : (
               <Fragment>
-                {`${indicatorByCity.indicator.label}`}
-                <p></p>
                 <IndicatorList
                   cityId={project.cityId}
                   defaultValue={`${indicatorByCity.indicator.name}`}
                 />
+                <hr />
+                <h2>{`${indicatorByCity.indicator.label}`}</h2>
+                {`${indicatorByCity.indicator.description}`}
+                <p></p>
+                <LineChart data={indicatorByCity} />
               </Fragment>
             )}
           </Fragment>

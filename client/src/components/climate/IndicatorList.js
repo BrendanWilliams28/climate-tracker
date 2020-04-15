@@ -26,20 +26,25 @@ const IndicatorList = ({
     <Fragment>
       {indicatorList.length > 0 ? (
         <Fragment>
-          <select
-            defaultValue={defaultValue}
-            onChange={e => setIndicator(e.currentTarget.value)}
-            disabled={loading}
-          >
-            <option key='' value=''>
-              Select
-            </option>
-            {indicatorList.map(indicator => (
-              <option key={indicator.name} value={indicator.name}>
-                {indicator.label}
+          <label>
+            Select a climate indicator:
+            <select
+              defaultValue={defaultValue}
+              onChange={e => setIndicator(e.currentTarget.value)}
+              disabled={loading}
+            >
+              <option key='' value=''>
+                Select
               </option>
-            ))}
-          </select>
+              {indicatorList
+                .filter(indicator => !indicator.name.includes('threshold'))
+                .map(indicator => (
+                  <option key={indicator.name} value={indicator.name}>
+                    {indicator.label}
+                  </option>
+                ))}
+            </select>
+          </label>
         </Fragment>
       ) : (
         <h4>No climate indicators loaded</h4>
