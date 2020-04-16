@@ -9,6 +9,8 @@ const LineChart = ({ data }) => {
 
   let metaData = {};
 
+  let chartOptions = {};
+
   if (data) {
     cityData.latitude = data.city.geometry.coordinates[0];
     cityData.longitude = data.city.geometry.coordinates[1];
@@ -28,79 +30,72 @@ const LineChart = ({ data }) => {
     let dataPointsMin = [];
     let dataPointsMax = [];
 
-    chartData.labels.forEach(
-      dataPoint => (
-        dataPointsAverage.push(data.data[dataPoint].avg.toFixed(1)),
-        dataPointsMin.push(data.data[dataPoint].min.toFixed(1)),
-        dataPointsMax.push(data.data[dataPoint].max.toFixed(1))
-      )
-    );
+    chartData.labels.forEach(dataPoint => {
+      dataPointsAverage.push(data.data[dataPoint].avg.toFixed(1));
+      dataPointsMin.push(data.data[dataPoint].min.toFixed(1));
+      dataPointsMax.push(data.data[dataPoint].max.toFixed(1));
+    });
 
     chartData.datasets = [
       {
         label: 'Minimum',
         fill: 1,
-        lineTension: 0.1,
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
+        pointRadius: 5,
+        pointHoverRadius: 10,
+        backgroundColor: 'rgba(102,153,0,0.4)',
+        borderColor: 'rgba(51,153,0,1)',
         data: dataPointsMin
       },
       {
         label: 'Average',
-        fill: 1,
-        lineTension: 0.1,
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
+        fill: false,
+        pointRadius: 5,
+        pointHoverRadius: 10,
+        backgroundColor: 'rgba(255,0,0,0.4)',
+        borderColor: 'rgba(204,0,0,1)',
         data: dataPointsAverage
       },
       {
         label: 'Maximum',
         fill: 1,
-        lineTension: 0.1,
+        pointRadius: 5,
+        pointHoverRadius: 10,
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
         data: dataPointsMax
       }
     ];
+
+    chartOptions = {
+      legend: {
+        display: true,
+        labels: {
+          fontStyle: 'bold'
+        }
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Years',
+              fontStyle: 'bold'
+            }
+          }
+        ],
+        yAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: `Units: ${metaData.units}`,
+              fontStyle: 'bold'
+            }
+          }
+        ]
+      }
+    };
   }
 
   return (
@@ -109,7 +104,7 @@ const LineChart = ({ data }) => {
         {Object.keys(chartData).length === 0 ? (
           <b>No chart data</b>
         ) : (
-          <Line data={chartData} />
+          <Line data={chartData} options={chartOptions} />
         )}
       </div>
     </Fragment>
