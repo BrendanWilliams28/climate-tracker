@@ -34,7 +34,7 @@ export const getIndicatorByCity = (
   dispatch({ type: CLEAR_INDICATOR_BY_CITY });
   try {
     const res = await axios.get(
-      `/api/climate/climate-data/${city}/${scenario}/indicator/${indicator_name}`
+      `/api/climate/climate-data/${city}/${scenario}/indicator/${indicator_name}/`
     );
 
     dispatch({

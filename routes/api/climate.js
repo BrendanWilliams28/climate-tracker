@@ -29,7 +29,7 @@ router.get('/indicator', auth, async (req, res) => {
 // @desc   Get Indicator Data by City
 // @access Private
 router.get(
-  '/climate-data/:city/:scenario/indicator/:indicator_name',
+  '/climate-data/:city/:scenario/indicator/:indicator_name/',
   auth,
   async (req, res) => {
     try {
