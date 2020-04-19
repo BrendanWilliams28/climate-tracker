@@ -40,7 +40,7 @@ const LineChart = ({ data }) => {
       {
         label: 'Minimum',
         fill: 1,
-        pointRadius: 5,
+        pointRadius: 0,
         pointHoverRadius: 10,
         backgroundColor: 'rgba(102,153,0,0.4)',
         borderColor: 'rgba(51,153,0,1)',
@@ -49,7 +49,7 @@ const LineChart = ({ data }) => {
       {
         label: 'Average',
         fill: false,
-        pointRadius: 5,
+        pointRadius: 0,
         pointHoverRadius: 10,
         backgroundColor: 'rgba(255,0,0,0.4)',
         borderColor: 'rgba(204,0,0,1)',
@@ -58,7 +58,7 @@ const LineChart = ({ data }) => {
       {
         label: 'Maximum',
         fill: 1,
-        pointRadius: 5,
+        pointRadius: 0,
         pointHoverRadius: 10,
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,1)',
@@ -67,6 +67,15 @@ const LineChart = ({ data }) => {
     ];
 
     chartOptions = {
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false
+      },
+      hover: {
+        mode: 'index',
+        intersect: false
+      },
       legend: {
         display: true,
         labels: {
