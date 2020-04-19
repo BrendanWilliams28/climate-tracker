@@ -10,7 +10,7 @@ const ClimateSources = ({
   auth
 }) => {
   useEffect(() => {
-    getClimateSources();
+    if (Object.keys(sources).length === 0) getClimateSources();
   }, [getClimateSources]);
 
   return (
