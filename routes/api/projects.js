@@ -16,9 +16,6 @@ router.post(
   [
     auth,
     [
-      check('title', 'Title is required')
-        .not()
-        .isEmpty(),
       check('city', 'City is required')
         .not()
         .isEmpty()
@@ -121,9 +118,6 @@ router.put(
   [
     auth,
     [
-      check('title', 'Title is required')
-        .not()
-        .isEmpty(),
       check('city', 'City is required')
         .not()
         .isEmpty()

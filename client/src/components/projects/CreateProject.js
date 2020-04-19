@@ -19,11 +19,6 @@ const CreateProject = ({ createProject, history }) => {
     city: ''
   });
 
-  const { title, description } = formData;
-
-  const onChange = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
   const onSubmit = e => {
     e.preventDefault();
     createProject(formData, history);
@@ -42,26 +37,6 @@ const CreateProject = ({ createProject, history }) => {
       </p>
 
       <form className='form' onSubmit={onSubmit} autoComplete='off'>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Project Title'
-            name='title'
-            value={title}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Description'
-            name='description'
-            value={description}
-            onChange={onChange}
-            required
-          />
-        </div>
         {scriptLoaded && !scriptError ? (
           <div className='form-group'>
             <LocationSearchInput setFormLocation={setFormLocation} />

@@ -4,16 +4,7 @@ import PropTypes from 'prop-types';
 
 const Project = ({ project: { _id, title, description, city, updatedAt } }) => (
   <div>
-    <h3 className='text-dark'>{title}</h3>
-    <p>
-      <strong>Description: </strong> {description}
-    </p>
-    <p>
-      <strong>City: </strong> {city}
-    </p>
-    <p>
-      <strong>Last Update: </strong> {updatedAt}
-    </p>
+    <h3 className='text-dark'>{city}</h3>
 
     <ProjectActions _id={_id} />
     <br />

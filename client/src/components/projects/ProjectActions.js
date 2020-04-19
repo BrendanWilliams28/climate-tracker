@@ -7,14 +7,8 @@ import { deleteProject } from '../../actions/projects';
 const ProjectActions = ({ _id, deleteProject }) => {
   return (
     <div className='dash-buttons'>
-      <Link to={`/view-project/${_id}`} className='btn btn-primary'>
-        <i className='fas fa-chart-line text-default' /> View Project
-      </Link>
       <Link to={`/climate/${_id}`} className='btn btn-success'>
         <i className='fas fa-leaf text-default' /> Climate Data
-      </Link>
-      <Link to={`/edit-project/${_id}`} className='btn btn-default'>
-        <i className='fas fa-edit text-default' /> Edit Project
       </Link>
       <button
         onClick={() => deleteProject(_id)}
