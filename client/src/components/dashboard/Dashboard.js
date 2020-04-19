@@ -13,7 +13,7 @@ const Dashboard = ({ auth: { user } }) => {
       </p>
       <Fragment>
         <Link to='/create-project' className='btn btn-primary my-1'>
-          Add City
+          <i className='fas fa-plus-circle' /> Add City
         </Link>
       </Fragment>
       <hr />

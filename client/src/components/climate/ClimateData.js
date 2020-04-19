@@ -41,8 +41,8 @@ const ClimateData = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to='/dashboard' className='btn btn-light'>
-            Back To Dashboard
+          <Link to='/dashboard' className='btn btn-primary'>
+            <i className='fas fa-long-arrow-alt-left' /> Back To Dashboard
           </Link>
 
           <h1 className='large text-primary'>{`Climate Data for ${project.city}`}</h1>
