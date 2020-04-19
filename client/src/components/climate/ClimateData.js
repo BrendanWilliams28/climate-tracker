@@ -26,7 +26,9 @@ const ClimateData = ({
 
   useEffect(() => {
     if (isMounted) {
-      if (project) getIndicatorByCity(project.cityId);
+      if (project) {
+        if (project.cityId) getIndicatorByCity(project.cityId);
+      }
     }
   }, [isMounted, getIndicatorByCity, project]);
 
