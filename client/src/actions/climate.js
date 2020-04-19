@@ -29,12 +29,14 @@ export const getIndicatorList = () => async dispatch => {
 export const getIndicatorByCity = (
   city,
   scenario = 'RCP85',
-  indicator_name = 'accumulated_freezing_degree_days'
+  indicator_name = 'accumulated_freezing_degree_days',
+  startYear = 1950,
+  endYear = 2100
 ) => async dispatch => {
   dispatch({ type: CLEAR_INDICATOR_BY_CITY });
   try {
     const res = await axios.get(
-      `/api/climate/climate-data/${city}/${scenario}/indicator/${indicator_name}/`
+      `/api/climate/climate-data/${city}/${scenario}/indicator/${indicator_name}/?years=${startYear}:${endYear}`
     );
 
     dispatch({
