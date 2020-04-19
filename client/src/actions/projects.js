@@ -32,8 +32,9 @@ export const createProject = (
 
     dispatch(setAlert(edit ? 'Project Updated' : 'Project Created', 'success'));
 
+    console.log(res.data);
     if (!edit) {
-      history.push('/dashboard');
+      history.push(`/climate/${res.data._id}`);
     }
   } catch (err) {
     const errors = err.response.data.errors;
