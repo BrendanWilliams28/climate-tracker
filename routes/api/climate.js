@@ -76,4 +76,40 @@ router.get(
   }
 );
 
+// @route  GET api/climate/sources
+// @desc   Get Climate Sources
+// @access Private
+router.get('/sources', auth, async (req, res) => {
+  try {
+    const [dataSet, scenario] = await axios.all([
+      axios({
+        method: 'get',
+        url: `https://app.climate.azavea.com/api/dataset/NEX-GDDP`,
+        headers: {
+          Authorization: config.get('climateAuth')
+        }
+      }),
+      axios({
+        method: 'get',
+        url: `https://app.climate.azavea.com/api/scenario/`,
+        headers: {
+          Authorization: config.get('climateAuth')
+        }
+      })
+    ]);
+
+    const response = {
+      data: {
+        dataSet: dataSet.data,
+        scenario: scenario.data
+      }
+    };
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;

@@ -9,6 +9,7 @@ import { getProjectById } from '../../actions/projects';
 import { getIndicatorByCity } from '../../actions/climate';
 
 import { useMounted } from '../../hooks/useMounted';
+import ClimateSources from './ClimateSources';
 
 const ClimateData = ({
   getProjectById,
@@ -63,6 +64,8 @@ const ClimateData = ({
                 {`${indicatorByCity.indicator.description}`}
                 <p></p>
                 <LineChart data={indicatorByCity} />
+                <hr />
+                <ClimateSources />
               </Fragment>
             )}
           </Fragment>

@@ -5,7 +5,10 @@ import {
   INDICATOR_LIST_ERROR,
   GET_INDICATOR_BY_CITY,
   INDICATOR_BY_CITY_ERROR,
-  CLEAR_INDICATOR_BY_CITY
+  CLEAR_INDICATOR_BY_CITY,
+  GET_CLIMATE_SOURCES,
+  CLIMATE_SOURCES_ERROR,
+  CLEAR_CLIMATE_SOURCES
 } from './types';
 
 // Get climate indicator list
@@ -46,6 +49,24 @@ export const getIndicatorByCity = (
   } catch (err) {
     dispatch({
       type: INDICATOR_BY_CITY_ERROR,
+      payload: { msg: err.response, status: err.response.status }
+    });
+  }
+};
+
+// Get climate sources
+export const getClimateSources = () => async dispatch => {
+  dispatch({ type: CLEAR_CLIMATE_SOURCES });
+  try {
+    const res = await axios.get(`/api/climate/sources`);
+
+    dispatch({
+      type: GET_CLIMATE_SOURCES,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: CLIMATE_SOURCES_ERROR,
       payload: { msg: err.response, status: err.response.status }
     });
   }
