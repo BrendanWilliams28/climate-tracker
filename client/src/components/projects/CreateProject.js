@@ -36,12 +36,11 @@ const CreateProject = ({ createProject, history }) => {
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Create New Project</h1>
+      <h1 className='large text-primary'>Add New City</h1>
       <p className='lead'>
-        <i className='fas fa-user' /> Start a new project to begin tracking
-        climate.
+        <i className='fas fa-city' /> Select a city to begin tracking climate.
       </p>
-      <small>* = required field</small>
+
       <form className='form' onSubmit={onSubmit} autoComplete='off'>
         <div className='form-group'>
           <input

@@ -9,8 +9,7 @@ const ProjectSchema = new Schema(
       ref: 'users'
     },
     title: {
-      type: String,
-      required: true
+      type: String
     },
     description: {
       type: String
