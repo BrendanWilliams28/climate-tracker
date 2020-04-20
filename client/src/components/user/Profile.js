@@ -23,8 +23,9 @@ export const Profile = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to='/dashboard' className='btn btn-light'>
-            Back To Dashboard
+          <Link to='/dashboard' className='btn btn-primary'>
+            <i className='fas fa-long-arrow-alt-left text-default' /> Back To
+            Dashboard
           </Link>
           {auth.isAuthenticated &&
             auth.loading === false &&
@@ -32,6 +33,9 @@ export const Profile = ({
               <Fragment>
                 <Link to={'/edit-profile'} className='btn btn-dark'>
                   <i className='fas fa-edit text-default' /> Edit Profile
+                </Link>
+                <Link to={'/change-password'} className='btn btn-light'>
+                  <i className='fas fa-lock text-default' /> Change Password
                 </Link>
                 <button
                   onClick={() => deleteUser(user._id)}

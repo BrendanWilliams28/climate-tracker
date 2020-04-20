@@ -45,7 +45,40 @@ export const updateProfile = (formData, history) => async dispatch => {
       payload: res.data
     });
 
-    dispatch(setAlert('Profile Update', 'success'));
+    dispatch(setAlert('Profile Updated', 'success'));
+
+    history.push('/profile');
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: USER_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+// Update password
+export const updatePassword = (formData, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.put('/api/users/password', formData, config);
+
+    dispatch({
+      type: GET_USER,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Password Updated', 'success'));
 
     history.push('/profile');
   } catch (error) {

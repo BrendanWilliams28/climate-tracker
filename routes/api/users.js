@@ -125,6 +125,45 @@ router.put(
   }
 );
 
+// @route    PUT api/users/password
+// @desc     Edit a user's password
+// @access   Private
+router.put(
+  '/password',
+  [
+    auth,
+    [
+      check(
+        'password',
+        'Please enter a password with 6 or more characters'
+      ).isLength({ min: 6 })
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    let { password } = req.body;
+    try {
+      const user = await User.findById(req.user.id);
+
+      // Encrypt password
+      const salt = await bcrypt.genSalt(10);
+
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
+
+      res.json({ msg: 'Password updated' });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 // @route   GET api/users/list
 // @desc    Get all users
 // @access  Public
