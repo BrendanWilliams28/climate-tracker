@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const nodemailer = require('nodemailer');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
-const nodemailer = require('nodemailer');
+const User = require('../../models/User');
 
 let transporter = nodemailer.createTransport({
   host: config.get('mailHost'),
@@ -31,25 +32,32 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email } = req.body;
-
-    let mailOptions = {
-      from: config.get('mailUser'),
-      to: email,
-      subject: 'Climate Tracker - Password Request',
-      text: 'Password request successful',
-      html: '<b>Password</b> request successful'
-    };
-
     try {
-      transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-          res.status(500).send('Server error');
-        } else {
-          // console.log('Email sent: ' + info.response);
-          res.json(info);
-        }
-      });
+      const { email } = req.body;
+
+      // See if user exists
+      let user = await User.findOne({ email });
+
+      if (user === null) {
+        return res.status(400).json({ errors: [{ msg: 'Email not found' }] });
+      } else {
+        let mailOptions = {
+          from: config.get('mailUser'),
+          to: email,
+          subject: 'Climate Tracker - Password Request',
+          text: 'Password request successful',
+          html: '<b>Password</b> request successful'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info) {
+          if (error) {
+            res.status(500).send('Server error');
+          } else {
+            // console.log('Email sent: ' + info.response);
+            res.json(info);
+          }
+        });
+      }
     } catch (error) {
       console.error(error.message);
       res.status(500).send('Server error');

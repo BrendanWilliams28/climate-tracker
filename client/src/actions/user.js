@@ -95,6 +95,31 @@ export const updatePassword = (formData, history) => async dispatch => {
   }
 };
 
+// Reset password
+export const resetPassword = (formData, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    await axios.post('/api/mail/reset', formData, config);
+
+    dispatch(
+      setAlert('Your password has been reset and emailed to you', 'success')
+    );
+
+    history.push('/login');
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+  }
+};
+
 // Delete user & projects
 export const deleteUser = userId => async dispatch => {
   try {

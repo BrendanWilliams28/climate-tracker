@@ -25,6 +25,8 @@ export const Landing = ({ isAuthenticated }) => {
               Login
             </Link>
           </div>
+          <br />
+          <Link to='/forgot-password'>I forgot my password</Link>
         </div>
       </div>
     </section>
