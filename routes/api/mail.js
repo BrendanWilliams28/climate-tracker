@@ -61,8 +61,12 @@ router.post(
           from: config.get('mailUser'),
           to: email,
           subject: 'Climate Tracker - Password Request',
-          text: 'Password request successful',
-          html: '<b>Password</b> request successful'
+          html:
+            'Hi ' +
+            user.name +
+            ', <p>We received a password reset request for your account</p> <p><a href=http://localhost:3000/new-password/' +
+            newPassword +
+            ">Click here to reset your password</a></p><p>If you didn't request a new password, you may ignore this email.</p>"
         };
 
         transporter.sendMail(mailOptions, function(error, info) {
