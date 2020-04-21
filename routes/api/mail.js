@@ -20,6 +20,17 @@ let transporter = nodemailer.createTransport({
   }
 });
 
+function randomPassword(length) {
+  var result = '';
+  var characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 // @route   POST api/mail
 // @desc    Send password reset
 // @access  Public
@@ -37,6 +48,11 @@ router.post(
 
       // See if user exists
       let user = await User.findOne({ email });
+      const newPassword = randomPassword(6);
+
+      // Save reset password:
+      user.reset = newPassword;
+      await user.save();
 
       if (user === null) {
         return res.status(400).json({ errors: [{ msg: 'Email not found' }] });
