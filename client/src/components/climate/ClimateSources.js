@@ -57,7 +57,7 @@ const ClimateSources = ({
             </thead>
             <tbody>
               {sources.scenario.map(scenario => (
-                <tr>
+                <tr key={scenario.name}>
                   <td>{scenario.label}</td>
                   <td>{scenario.description}</td>
                 </tr>
@@ -75,7 +75,7 @@ const ClimateSources = ({
             </thead>
             <tbody>
               {sources.dataSet.models.map(climateModel => (
-                <tr>
+                <tr key={climateModel}>
                   <td>{climateModel}</td>
                 </tr>
               ))}
@@ -93,7 +93,8 @@ ClimateSources.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  sources: state.climate
+  sources: state.climate,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getClimateSources })(ClimateSources);
