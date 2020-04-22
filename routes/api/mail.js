@@ -64,9 +64,10 @@ router.post(
           html:
             'Hi ' +
             user.name +
-            ', <p>We received a password reset request for your account</p> <p><a href=http://localhost:3000/new-password/' +
+            ', <p>We received a password reset request for your account</p> <p><a href=http://localhost:3000/reset-password/' +
             newPassword +
-            ">Click here to reset your password</a></p><p>If you didn't request a new password, you may ignore this email.</p>"
+            ">Click here to reset your password</a></p><p>If you didn't request a new password, you may ignore this email.</p>" +
+            '<p>This link will only be active until you change your password.</p>'
         };
 
         transporter.sendMail(mailOptions, function(error, info) {

@@ -7,6 +7,7 @@ import Dashboard from '../dashboard/Dashboard';
 import Profile from '../user/Profile';
 import EditProfile from '../user/EditProfile';
 import ChangePassword from '../user/ChangePassword';
+import ResetPassword from '../auth/ResetPassword';
 import ForgotPassword from '../user/ForgotPassword';
 import ViewUsers from '../user/ViewUsers';
 import CreateProject from '../projects/CreateProject';
@@ -24,6 +25,7 @@ const Routes = () => {
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/forgot-password' component={ForgotPassword} />
+        <Route exact path='/reset-password/:token' component={ResetPassword} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/profile' component={Profile} />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />
