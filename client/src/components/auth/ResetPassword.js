@@ -1,8 +1,29 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loginReset } from '../../actions/auth';
+import Copyright from '../layout/Copyright';
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  }
+}));
 
 export const ResetPassword = ({
   loginReset,
@@ -10,6 +31,8 @@ export const ResetPassword = ({
   isAuthenticated,
   history
 }) => {
+  const classes = useStyles();
+
   useEffect(() => {
     if (match.params.token) {
       loginReset(match.params.token, history);
@@ -22,9 +45,20 @@ export const ResetPassword = ({
   }
 
   return (
-    <Fragment>
-      <h1 className='large text-primary'>Logging in with reset password...</h1>
-    </Fragment>
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5'>
+          Logging in with reset password...
+        </Typography>
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
   );
 };
 
