@@ -1,10 +1,35 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import User from './User';
 import Spinner from '../layout/Spinner';
 import { getCurrentUser, deleteUser } from '../../actions/user';
+import Copyright from '../layout/Copyright';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  }
+}));
 
 export const Profile = ({
   getCurrentUser,
@@ -12,47 +37,45 @@ export const Profile = ({
   auth,
   deleteUser
 }) => {
+  const classes = useStyles();
+
   const nullUser = !user;
   useEffect(() => {
     getCurrentUser();
   }, [getCurrentUser, nullUser]);
 
   return (
-    <Fragment>
-      {user === null || loading ? (
-        <Spinner />
-      ) : (
-        <Fragment>
-          <Link to='/dashboard' className='btn btn-primary'>
-            <i className='fas fa-long-arrow-alt-left text-default' /> Back To
-            Dashboard
-          </Link>
-          {auth.isAuthenticated &&
-            auth.loading === false &&
-            auth.user._id === user._id && (
-              <Fragment>
-                <Link to={'/edit-profile'} className='btn btn-dark'>
-                  <i className='fas fa-edit text-default' /> Edit Profile
-                </Link>
-                <Link to={'/change-password'} className='btn btn-light'>
-                  <i className='fas fa-lock text-default' /> Change Password
-                </Link>
-                <button
-                  onClick={() => deleteUser(user._id)}
-                  type='button'
-                  className='btn btn-danger'
-                >
-                  <i className='fas fa-times' /> Delete Account
-                </button>
-              </Fragment>
-            )}
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        {user === null || loading ? (
+          <Spinner />
+        ) : (
+          <Fragment>
+            <User key={user._id} user={user} />
 
-          <br />
-          <br />
-          <User key={user._id} user={user} />
-        </Fragment>
-      )}
-    </Fragment>
+            <Button variant='contained' color='primary' href='/edit-profile'>
+              Edit
+            </Button>
+
+            <Button variant='contained' color='primary' href='/change-password'>
+              Change Password
+            </Button>
+
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => deleteUser(user._id)}
+            >
+              Delete Account
+            </Button>
+          </Fragment>
+        )}
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
   );
 };
 

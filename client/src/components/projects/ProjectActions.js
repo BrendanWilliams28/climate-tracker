@@ -1,23 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteProject } from '../../actions/projects';
+import Button from '@material-ui/core/Button';
 
 const ProjectActions = ({ _id, deleteProject }) => {
   return (
-    <div className='dash-buttons'>
-      <Link to={`/climate/${_id}`} className='btn btn-success'>
-        <i className='fas fa-leaf text-default' /> Climate Data
-      </Link>
-      <button
-        onClick={() => deleteProject(_id)}
-        type='button'
-        className='btn btn-danger'
-      >
-        <i className='fas fa-times' />
-      </button>
-    </div>
+    <Fragment>
+      <Button size='small' color='primary' href={`/climate/${_id}`}>
+        View Climate Data
+      </Button>
+      <Button size='small' color='primary' onClick={() => deleteProject(_id)}>
+        Delete
+      </Button>
+    </Fragment>
   );
 };
 

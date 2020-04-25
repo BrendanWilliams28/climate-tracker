@@ -1,5 +1,6 @@
 import React from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
+import Input from '@material-ui/core/Input';
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -37,8 +38,9 @@ class LocationSearchInput extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <input
+            <Input
               required
+              fullWidth
               {...getInputProps({
                 placeholder: 'City, State',
                 className: 'location-search-input',
