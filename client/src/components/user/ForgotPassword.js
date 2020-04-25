@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import EmailIcon from '@material-ui/icons/Email';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -59,14 +59,12 @@ const ForgotPassword = ({ setAlert, resetPassword, history }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <EmailIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Reset Password
-        </Typography>
-        <Typography component='subtitle2' variant='h5'>
           Please enter your account email to receive a reset password
         </Typography>
+
         <form className={classes.form} onSubmit={onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -84,20 +82,18 @@ const ForgotPassword = ({ setAlert, resetPassword, history }) => {
               />
             </Grid>
           </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-          >
-            Submit
-          </Button>
-          <Grid container justify='flex-end'>
+
+          <br />
+          <Grid container spacing={2} justify='center'>
             <Grid item>
-              <Link href='/' variant='body2'>
+              <Button href='/' variant='contained'>
                 Go Back
-              </Link>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button type='submit' variant='contained' color='primary'>
+                Submit
+              </Button>
             </Grid>
           </Grid>
         </form>

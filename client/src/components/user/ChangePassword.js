@@ -101,20 +101,18 @@ const ChangePassword = ({ setAlert, updatePassword, history }) => {
               />
             </Grid>
           </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-          >
-            Submit
-          </Button>
-          <Grid container justify='flex-end'>
+
+          <br />
+          <Grid container spacing={2} justify='center'>
             <Grid item>
-              <Link href='/profile' variant='body2'>
-                Go Back
-              </Link>
+              <Button href='/dashboard' variant='contained'>
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button type='submit' variant='contained' color='primary'>
+                Submit
+              </Button>
             </Grid>
           </Grid>
         </form>

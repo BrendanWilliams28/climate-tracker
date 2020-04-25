@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -65,12 +65,9 @@ const CreateProject = ({ createProject, history }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LocationCityIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Add New City
-        </Typography>
-        <Typography component='subtitle2' variant='h5'>
           Enter a city to begin tracking climate.
         </Typography>
         <form
@@ -89,24 +86,20 @@ const CreateProject = ({ createProject, history }) => {
               )}
             </Grid>
           </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-          >
-            Submit
-          </Button>
 
-          <Button
-            fullWidth
-            variant='contained'
-            color='primary'
-            href='/dashboard'
-          >
-            Back
-          </Button>
+          <br />
+          <Grid container spacing={2} justify='center'>
+            <Grid item>
+              <Button href='/dashboard' variant='contained'>
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button type='submit' variant='contained' color='primary'>
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </div>
       <Box mt={5}>
