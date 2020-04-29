@@ -1,13 +1,26 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Alert, AlertTitle } from '@material-ui/lab';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2)
+    }
+  }
+}));
 
 const NotFound = () => {
+  const classes = useStyles();
+
   return (
-    <Fragment>
-      <h1 className='x-large text-primary'>
-        <i className='fas fa-exclamation-triangle' /> Page Not Found
-      </h1>
-      <p className='large'>Sorry, this page does not exist</p>
-    </Fragment>
+    <div className={classes.root}>
+      <Alert severity='info'>
+        <AlertTitle>Page Not Found</AlertTitle>
+        Sorry, this page does not exist
+      </Alert>
+    </div>
   );
 };
 

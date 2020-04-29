@@ -52,7 +52,7 @@ const ChangePassword = ({ setAlert, updatePassword, history }) => {
   const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
-      setAlert('Passwords do not match', 'danger');
+      setAlert('Passwords do not match', 'error');
     } else {
       updatePassword(formData, history);
     }
