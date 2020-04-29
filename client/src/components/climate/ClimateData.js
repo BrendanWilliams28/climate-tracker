@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import IndicatorList from './IndicatorList';
@@ -8,8 +7,30 @@ import LineChart from '../charts/LineChart';
 import { getProjectById } from '../../actions/projects';
 import { getIndicatorByCity } from '../../actions/climate';
 
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
 import { useMounted } from '../../hooks/useMounted';
 import ClimateSources from './ClimateSources';
+
+const useStyles = makeStyles(theme => ({
+  icon: {
+    marginRight: theme.spacing(2)
+  },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6)
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4)
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6)
+  }
+}));
 
 const ClimateData = ({
   getProjectById,
@@ -19,6 +40,8 @@ const ClimateData = ({
   auth,
   match
 }) => {
+  const classes = useStyles();
+
   const isMounted = useMounted();
 
   useEffect(() => {
@@ -39,39 +62,56 @@ const ClimateData = ({
   }, [indicatorByCity]);
 
   return (
-    <Fragment>
+    <main>
       {project === null || loading ? (
         <Spinner />
       ) : (
         <Fragment>
-          <Link to='/dashboard' className='btn btn-primary'>
-            <i className='fas fa-long-arrow-alt-left' /> Back To Dashboard
-          </Link>
-
-          <h1 className='large text-primary'>{`Climate Data for ${project.city}`}</h1>
-          <Fragment>
-            {Object.keys(indicatorByCity).length === 0 ||
-            indicatorByCityLoading ? (
-              <Spinner />
-            ) : (
-              <Fragment>
-                <IndicatorList
-                  cityId={project.cityId}
-                  defaultValue={`${indicatorByCity.indicator.name}`}
-                />
-                <hr />
-                <h2>{`${indicatorByCity.indicator.label}`}</h2>
-                {`${indicatorByCity.indicator.description}`}
-                <p></p>
-                <LineChart data={indicatorByCity} />
-                <hr />
-                <ClimateSources />
-              </Fragment>
-            )}
-          </Fragment>
+          {/* Hero unit */}
+          <div className={classes.heroContent}>
+            <Container maxWidth='sm'>
+              <Typography
+                component='h1'
+                variant='h2'
+                align='center'
+                color='textPrimary'
+                gutterBottom
+              >
+                {`${project.city}`}
+              </Typography>
+            </Container>
+          </div>
+          <Container maxWidth='md'>
+            <Grid container spacing={2} justify='center'>
+              <Grid item>
+                {Object.keys(indicatorByCity).length === 0 ||
+                indicatorByCityLoading ? (
+                  <Spinner />
+                ) : (
+                  <Fragment>
+                    <IndicatorList
+                      cityId={project.cityId}
+                      defaultValue={`${indicatorByCity.indicator.name}`}
+                    />
+                    <hr />
+                    <Typography gutterBottom variant='h5' component='h2'>
+                      {`${indicatorByCity.indicator.label}`}
+                    </Typography>
+                    <Typography>
+                      {`${indicatorByCity.indicator.description}`}
+                    </Typography>
+                    <p></p>
+                    <LineChart data={indicatorByCity} />
+                    <hr />
+                    <ClimateSources />
+                  </Fragment>
+                )}
+              </Grid>
+            </Grid>
+          </Container>
         </Fragment>
       )}
-    </Fragment>
+    </main>
   );
 };
 
