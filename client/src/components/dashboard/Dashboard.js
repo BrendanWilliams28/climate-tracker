@@ -3,12 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProjectList from '../projects/ProjectList';
 import Copyright from '../layout/Copyright';
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -35,14 +32,6 @@ const Dashboard = ({ auth: { user } }) => {
   return (
     <Fragment>
       <CssBaseline />
-      <AppBar position='relative'>
-        <Toolbar>
-          <CameraIcon className={classes.icon} />
-          <Typography variant='h6' color='inherit' noWrap>
-            Climate Tracker
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
