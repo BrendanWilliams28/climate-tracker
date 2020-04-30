@@ -86,6 +86,13 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       <MenuItem onClick={handleMenuClose} component={Link} to='/edit-profile'>
         Edit Profile
       </MenuItem>
+      <MenuItem
+        onClick={handleMenuClose}
+        component={Link}
+        to='/change-password'
+      >
+        Change Password
+      </MenuItem>
       <MenuItem onClick={handleMenuCloseAndLogout}>Logout</MenuItem>
     </Menu>
   );

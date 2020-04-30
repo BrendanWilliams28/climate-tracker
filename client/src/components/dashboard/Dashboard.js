@@ -15,11 +15,25 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6)
+    //backgroundColor: theme.palette.background.paper,
+    //padding: theme.spacing(8, 0, 6),
+    backgroundImage:
+      'url(https://source.unsplash.com/featured/?nature,glacier)',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center center',
+    backgroundSize: 'cover',
+    backgroundAttachment: 'fixed'
   },
   heroButtons: {
     marginTop: theme.spacing(4)
+  },
+  darkOverlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    padding: theme.spacing(8, 0, 6)
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -35,40 +49,41 @@ const Dashboard = ({ auth: { user } }) => {
 
       {/* Hero unit */}
       <div className={classes.heroContent}>
-        <Container maxWidth='sm'>
-          <Typography
-            component='h1'
-            variant='h2'
-            align='center'
-            color='textPrimary'
-            gutterBottom
-          >
-            Dashboard
-          </Typography>
-          <Typography
-            variant='h5'
-            align='center'
-            color='textSecondary'
-            paragraph
-          >
-            Track climate data of any US city.
-          </Typography>
-          <div className={classes.heroButtons}>
-            <Grid container spacing={2} justify='center'>
-              <Grid item>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  href='/create-project'
-                >
-                  Add City
-                </Button>
+        <div className={classes.darkOverlay}>
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='textPrimary'
+              gutterBottom
+            >
+              Dashboard
+            </Typography>
+            <Typography
+              variant='h5'
+              align='center'
+              color='textSecondary'
+              paragraph
+            >
+              Track climate data of any US city.
+            </Typography>
+            <div className={classes.heroButtons}>
+              <Grid container spacing={2} justify='center'>
+                <Grid item>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    href='/create-project'
+                  >
+                    Add City
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-          </div>
-        </Container>
+            </div>
+          </Container>
+        </div>
       </div>
-
       <ProjectList />
 
       <Copyright />
