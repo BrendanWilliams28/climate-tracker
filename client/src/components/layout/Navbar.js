@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import logo from '../../img/logo.png';
@@ -121,7 +121,9 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     </Menu>
   );
 
-  return (
+  const location = useLocation();
+
+  return location.pathname === '/login' || location.pathname === '/' ? null : (
     <div className={classes.grow}>
       <AppBar position='static'>
         <Toolbar>

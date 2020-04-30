@@ -32,44 +32,45 @@ const Dashboard = ({ auth: { user } }) => {
   return (
     <Fragment>
       <CssBaseline />
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth='sm'>
-            <Typography
-              component='h1'
-              variant='h2'
-              align='center'
-              color='textPrimary'
-              gutterBottom
-            >
-              Dashboard
-            </Typography>
-            <Typography
-              variant='h5'
-              align='center'
-              color='textSecondary'
-              paragraph
-            >
-              Track climate data of any US city.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify='center'>
-                <Grid item>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    href='/create-project'
-                  >
-                    Add City
-                  </Button>
-                </Grid>
-                <ProjectList />
+
+      {/* Hero unit */}
+      <div className={classes.heroContent}>
+        <Container maxWidth='sm'>
+          <Typography
+            component='h1'
+            variant='h2'
+            align='center'
+            color='textPrimary'
+            gutterBottom
+          >
+            Dashboard
+          </Typography>
+          <Typography
+            variant='h5'
+            align='center'
+            color='textSecondary'
+            paragraph
+          >
+            Track climate data of any US city.
+          </Typography>
+          <div className={classes.heroButtons}>
+            <Grid container spacing={2} justify='center'>
+              <Grid item>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  href='/create-project'
+                >
+                  Add City
+                </Button>
               </Grid>
-            </div>
-          </Container>
-        </div>
-      </main>
+            </Grid>
+          </div>
+        </Container>
+      </div>
+
+      <ProjectList />
+
       <Copyright />
     </Fragment>
   );
