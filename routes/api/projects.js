@@ -201,7 +201,9 @@ router.get('/', auth, async (req, res) => {
 // @access Private
 router.get('/user', auth, async (req, res) => {
   try {
-    const projects = await Project.find({ user: req.user.id });
+    const projects = await Project.find({ user: req.user.id }).sort({
+      city: 1
+    });
 
     if (!projects) {
       return res
