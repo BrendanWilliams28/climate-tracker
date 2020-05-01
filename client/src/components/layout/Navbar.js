@@ -1,18 +1,26 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
+import { getCurrentUser } from '../../actions/user';
 import logo from '../../img/logo.png';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Divider from '@material-ui/core/Divider';
+
+const initialState = {
+  name: '',
+  email: '',
+  avatar: ''
+};
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -23,6 +31,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block'
     }
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
   },
   inputRoot: {
     color: 'inherit'
@@ -41,8 +53,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+export const Navbar = ({
+  auth: { isAuthenticated, loading },
+  logout,
+  user: { user, loading: userLoading },
+  getCurrentUser
+}) => {
   const classes = useStyles();
+
+  const [userProfile, setUserProfile] = useState(initialState);
+
+  useEffect(() => {
+    if (!user) getCurrentUser();
+    if (!userLoading) {
+      const userData = { ...initialState };
+      for (const key in user) {
+        if (key in userData) userData[key] = user[key];
+      }
+      setUserProfile(userData);
+    }
+  }, [userLoading, getCurrentUser, user]);
+
+  const { name, email, avatar } = userProfile;
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -83,6 +116,13 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      {user ? (
+        <div>
+          <MenuItem disabled={true}>{name}</MenuItem>
+          <MenuItem disabled={true}>{email}</MenuItem>
+          <Divider />
+        </div>
+      ) : null}
       <MenuItem onClick={handleMenuClose} component={Link} to='/edit-profile'>
         Edit Profile
       </MenuItem>
@@ -121,7 +161,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           aria-haspopup='true'
           color='inherit'
         >
-          <AccountCircle />
+          <Avatar src={avatar} alt='avatar' />
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -156,9 +196,8 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                     aria-haspopup='true'
                     color='inherit'
                   >
-                    <AccountCircle />
+                    <Avatar src={avatar} alt='avatar' />
                   </IconButton>
-                  <p>Profile</p>
                 </MenuItem>
               </div>
               <div className={classes.sectionMobile}>
@@ -184,11 +223,14 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  getCurrentUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  user: state.user
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout, getCurrentUser })(Navbar);
