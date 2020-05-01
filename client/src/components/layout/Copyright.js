@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useLocation } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,10 +17,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Copyright = () => {
+export const Copyright = props => {
   const classes = useStyles();
 
-  return (
+  const location = useLocation();
+
+  return location.pathname === '/login' || location.pathname === '/' ? null : (
     <Fragment>
       <CssBaseline />
       <footer className={classes.footer}>

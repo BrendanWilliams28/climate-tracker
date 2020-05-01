@@ -35,20 +35,21 @@ const App = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <div>
-        <Provider store={store}>
-          <Router>
-            <Fragment>
+
+      <Provider store={store}>
+        <Router>
+          <Fragment>
+            <div>
               <Navbar />
               <Switch>
                 <Route exact path='/' component={Landing} />
                 <Route component={Routes} />
               </Switch>
-            </Fragment>
-          </Router>
-        </Provider>
-      </div>
-      <Copyright />
+            </div>
+            <Copyright />
+          </Fragment>
+        </Router>
+      </Provider>
     </div>
   );
 };
