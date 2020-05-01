@@ -117,7 +117,10 @@ const ClimateData = ({
               <Grid item>
                 {Object.keys(indicatorByCity).length === 0 ||
                 indicatorByCityLoading ? (
-                  <Spinner />
+                  <Fragment>
+                    <br />
+                    <Spinner />
+                  </Fragment>
                 ) : (
                   <Fragment>
                     <br />
