@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import LocationSearchInput from './LocationSearchInput';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProject } from '../../actions/projects';
-import Copyright from '../layout/Copyright';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -61,51 +59,50 @@ const CreateProject = ({ createProject, history }) => {
   };
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LocationCityIcon />
-        </Avatar>
-        <Typography component='h1' variant='h5'>
-          Enter a city to begin tracking climate.
-        </Typography>
-        <form
-          className={classes.form}
-          onSubmit={e => onSubmit(e)}
-          autoComplete='off'
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              {scriptLoaded && !scriptError ? (
-                <div className='form-group'>
-                  <LocationSearchInput setFormLocation={setFormLocation} />
-                </div>
-              ) : (
-                <Spinner />
-              )}
+    <Fragment>
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LocationCityIcon />
+          </Avatar>
+          <Typography component='h1' variant='h5'>
+            Enter a city to begin tracking climate.
+          </Typography>
+          <form
+            className={classes.form}
+            onSubmit={e => onSubmit(e)}
+            autoComplete='off'
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                {scriptLoaded && !scriptError ? (
+                  <div className='form-group'>
+                    <LocationSearchInput setFormLocation={setFormLocation} />
+                  </div>
+                ) : (
+                  <Spinner />
+                )}
+              </Grid>
             </Grid>
-          </Grid>
 
-          <br />
-          <Grid container spacing={2} justify='center'>
-            <Grid item>
-              <Button href='/dashboard' variant='contained'>
-                Cancel
-              </Button>
+            <br />
+            <Grid container spacing={2} justify='center'>
+              <Grid item>
+                <Button href='/dashboard' variant='contained'>
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button type='submit' variant='contained' color='primary'>
+                  Submit
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button type='submit' variant='contained' color='primary'>
-                Submit
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+      </Container>
+    </Fragment>
   );
 };
 

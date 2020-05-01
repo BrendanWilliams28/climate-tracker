@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
-import Copyright from '../layout/Copyright';
 import logo from '../../img/logo_big.png';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -135,7 +134,17 @@ export const Login = ({ login, isAuthenticated }) => {
               </Grid>
             </Grid>
             <Box mt={5}>
-              <Copyright />
+              <Typography variant='body2' color='textSecondary' align='center'>
+                {'Copyright © '}
+                <Link
+                  color='inherit'
+                  href='https://pactlegacy.com/'
+                  target='_blank'
+                >
+                  Pact Legacy
+                </Link>{' '}
+                {new Date().getFullYear()}
+              </Typography>
             </Box>
           </form>
         </div>

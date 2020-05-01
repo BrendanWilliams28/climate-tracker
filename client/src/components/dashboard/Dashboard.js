@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProjectList from '../projects/ProjectList';
-import Copyright from '../layout/Copyright';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -15,8 +14,6 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   heroContent: {
-    //backgroundColor: theme.palette.background.paper,
-    //padding: theme.spacing(8, 0, 6),
     backgroundImage:
       'url(https://source.unsplash.com/featured/?nature,glacier)',
     backgroundRepeat: 'no-repeat',
@@ -85,8 +82,6 @@ const Dashboard = ({ auth: { user } }) => {
         </div>
       </div>
       <ProjectList />
-
-      <Copyright />
     </Fragment>
   );
 };

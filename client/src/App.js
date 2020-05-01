@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Routes from './components/routing/Routes';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import Copyright from './components/layout/Copyright';
 
 //Redux
 import { Provider } from 'react-redux';
@@ -14,24 +17,38 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh'
+  }
+}));
+
 const App = () => {
+  const classes = useStyles();
+
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
 
   return (
-    <div>
-      <Provider store={store}>
-        <Router>
-          <Fragment>
-            <Navbar />
-            <Switch>
-              <Route exact path='/' component={Landing} />
-              <Route component={Routes} />
-            </Switch>
-          </Fragment>
-        </Router>
-      </Provider>
+    <div className={classes.root}>
+      <CssBaseline />
+      <div>
+        <Provider store={store}>
+          <Router>
+            <Fragment>
+              <Navbar />
+              <Switch>
+                <Route exact path='/' component={Landing} />
+                <Route component={Routes} />
+              </Switch>
+            </Fragment>
+          </Router>
+        </Provider>
+      </div>
+      <Copyright />
     </div>
   );
 };

@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { useMounted } from '../../hooks/useMounted';
 import ClimateSources from './ClimateSources';
 
@@ -20,11 +20,23 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6)
+    backgroundImage:
+      'url(https://source.unsplash.com/featured/?nature,glacier)',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center center',
+    backgroundSize: 'cover',
+    backgroundAttachment: 'fixed'
   },
   heroButtons: {
     marginTop: theme.spacing(4)
+  },
+  darkOverlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    padding: theme.spacing(8, 0, 6)
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -62,24 +74,43 @@ const ClimateData = ({
   }, [indicatorByCity]);
 
   return (
-    <main>
+    <Fragment>
+      <CssBaseline />
+
       {project === null || loading ? (
         <Spinner />
       ) : (
         <Fragment>
           {/* Hero unit */}
           <div className={classes.heroContent}>
-            <Container maxWidth='sm'>
-              <Typography
-                component='h1'
-                variant='h2'
-                align='center'
-                color='textPrimary'
-                gutterBottom
-              >
-                {`${project.city}`}
-              </Typography>
-            </Container>
+            <div className={classes.darkOverlay}>
+              <Container maxWidth='sm'>
+                <Typography
+                  component='h1'
+                  variant='h2'
+                  align='center'
+                  color='textPrimary'
+                  gutterBottom
+                >
+                  {`${project.city}`}
+                </Typography>
+                <div className={classes.heroButtons}>
+                  <Grid container spacing={2} justify='center'>
+                    <Grid item>
+                      {Object.keys(indicatorByCity).length === 0 ||
+                      indicatorByCityLoading ? (
+                        <Spinner />
+                      ) : (
+                        <IndicatorList
+                          cityId={project.cityId}
+                          defaultValue={`${indicatorByCity.indicator.name}`}
+                        />
+                      )}
+                    </Grid>
+                  </Grid>
+                </div>
+              </Container>
+            </div>
           </div>
           <Container maxWidth='md'>
             <Grid container spacing={2} justify='center'>
@@ -89,14 +120,7 @@ const ClimateData = ({
                   <Spinner />
                 ) : (
                   <Fragment>
-                    <IndicatorList
-                      cityId={project.cityId}
-                      defaultValue={`${indicatorByCity.indicator.name}`}
-                    />
-                    <hr />
-                    <Typography gutterBottom variant='h5' component='h2'>
-                      {`${indicatorByCity.indicator.label}`}
-                    </Typography>
+                    <br />
                     <Typography>
                       {`${indicatorByCity.indicator.description}`}
                     </Typography>
@@ -111,7 +135,7 @@ const ClimateData = ({
           </Container>
         </Fragment>
       )}
-    </main>
+    </Fragment>
   );
 };
 
