@@ -134,9 +134,9 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <div className={classes.grow}>
       <AppBar position='static'>
         <Toolbar>
-          <a href='/dashboard'>
+          <Link to='/dashboard'>
             <img src={logo} alt='Climate Hub' />
-          </a>
+          </Link>
 
           {!loading && isAuthenticated ? (
             <Fragment>
