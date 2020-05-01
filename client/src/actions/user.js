@@ -47,7 +47,7 @@ export const updateProfile = (formData, history) => async dispatch => {
 
     dispatch(setAlert('Profile Updated', 'success'));
 
-    history.push('/profile');
+    history.push('/dashboard');
   } catch (error) {
     const errors = error.response.data.errors;
 
@@ -80,7 +80,7 @@ export const updatePassword = (formData, history) => async dispatch => {
 
     dispatch(setAlert('Password Updated', 'success'));
 
-    history.push('/profile');
+    history.push('/dashboard');
   } catch (error) {
     const errors = error.response.data.errors;
 
