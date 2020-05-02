@@ -25,7 +25,9 @@ const IndicatorList = ({
   climateList: { indicatorList, loading },
   getIndicatorByCity,
   cityId,
-  defaultValue
+  defaultValue,
+  startYear,
+  endYear
 }) => {
   const classes = useStyles();
 
@@ -34,7 +36,7 @@ const IndicatorList = ({
   }, [getIndicatorList, indicatorList.length]);
 
   const setIndicator = indicator => {
-    getIndicatorByCity(cityId, undefined, indicator);
+    getIndicatorByCity(cityId, undefined, indicator, startYear, endYear);
   };
 
   return loading ? (
@@ -75,7 +77,9 @@ const IndicatorList = ({
 IndicatorList.propTypes = {
   auth: PropTypes.object.isRequired,
   climateList: PropTypes.object.isRequired,
-  cityId: PropTypes.number.isRequired
+  cityId: PropTypes.number.isRequired,
+  startYear: PropTypes.number.isRequired,
+  endYear: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
