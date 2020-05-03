@@ -171,6 +171,7 @@ const ClimateData = ({
                       max={2100}
                       value={sliderValue}
                     />
+
                     <Grid container spacing={2} justify='center'>
                       <Grid item>
                         <Button
