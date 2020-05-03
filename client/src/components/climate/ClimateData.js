@@ -13,6 +13,7 @@ import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
 import { useMounted } from '../../hooks/useMounted';
 import ClimateSources from './ClimateSources';
 
@@ -51,6 +52,10 @@ const useStyles = makeStyles(theme => ({
 function sliderValuetext(value) {
   return `${value}`;
 }
+
+const whiteText = {
+  color: '#ffffff'
+};
 
 const ClimateData = ({
   getProjectById,
@@ -114,33 +119,17 @@ const ClimateData = ({
           {/* Hero unit */}
           <div className={classes.heroContent}>
             <div className={classes.darkOverlay}>
-              <Container maxWidth='sm'>
+              <Container maxWidth='md'>
                 <Typography
                   component='h1'
                   variant='h2'
                   align='center'
                   color='textPrimary'
                   gutterBottom
+                  style={whiteText}
                 >
                   {`${project.city}`}
                 </Typography>
-                <div className={classes.heroButtons}>
-                  <Grid container spacing={2} justify='center'>
-                    <Grid item>
-                      {Object.keys(indicatorByCity).length === 0 ||
-                      indicatorByCityLoading ? (
-                        <Spinner />
-                      ) : (
-                        <IndicatorList
-                          cityId={project.cityId}
-                          defaultValue={`${indicatorByCity.indicator.name}`}
-                          startYear={Number(startYear)}
-                          endYear={Number(endYear)}
-                        />
-                      )}
-                    </Grid>
-                  </Grid>
-                </div>
               </Container>
             </div>
           </div>
@@ -155,6 +144,12 @@ const ClimateData = ({
                   </Fragment>
                 ) : (
                   <Fragment>
+                    <IndicatorList
+                      cityId={project.cityId}
+                      defaultValue={`${indicatorByCity.indicator.name}`}
+                      startYear={Number(startYear)}
+                      endYear={Number(endYear)}
+                    />
                     <br />
                     <Typography>
                       {`${indicatorByCity.indicator.description}`}
@@ -185,7 +180,10 @@ const ClimateData = ({
                       </Grid>
                     </Grid>
 
-                    <hr />
+                    <br />
+                    <Divider />
+                    <br />
+
                     <ClimateSources />
                   </Fragment>
                 )}

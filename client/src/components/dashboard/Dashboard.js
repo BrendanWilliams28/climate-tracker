@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const whiteText = {
+  color: '#ffffff'
+};
+
 const Dashboard = ({ auth: { user } }) => {
   const classes = useStyles();
   return (
@@ -54,6 +58,7 @@ const Dashboard = ({ auth: { user } }) => {
               align='center'
               color='textPrimary'
               gutterBottom
+              style={whiteText}
             >
               Dashboard
             </Typography>
@@ -62,6 +67,7 @@ const Dashboard = ({ auth: { user } }) => {
               align='center'
               color='textSecondary'
               paragraph
+              style={whiteText}
             >
               Track climate data of any US city.
             </Typography>
