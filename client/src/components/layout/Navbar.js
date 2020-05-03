@@ -64,7 +64,7 @@ export const Navbar = ({
   const [userProfile, setUserProfile] = useState(initialState);
 
   useEffect(() => {
-    if (!user) getCurrentUser();
+    if (isAuthenticated) getCurrentUser();
     if (!userLoading) {
       const userData = { ...initialState };
       for (const key in user) {
@@ -72,7 +72,7 @@ export const Navbar = ({
       }
       setUserProfile(userData);
     }
-  }, [userLoading, getCurrentUser, user]);
+  }, [userLoading, getCurrentUser, user, isAuthenticated]);
 
   const { name, email, avatar } = userProfile;
 

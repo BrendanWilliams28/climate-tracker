@@ -24,7 +24,7 @@ const ProjectList = ({
 
   useEffect(() => {
     getUserProjects();
-  }, [getUserProjects]);
+  }, [getUserProjects, user]);
 
   return loading ? (
     <Spinner />

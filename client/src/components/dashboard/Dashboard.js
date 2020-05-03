@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Spinner from '../layout/Spinner';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -42,9 +43,11 @@ const whiteText = {
   color: '#ffffff'
 };
 
-const Dashboard = ({ auth: { user } }) => {
+const Dashboard = ({ auth: { user, loading } }) => {
   const classes = useStyles();
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Fragment>
       <CssBaseline />
 
@@ -87,7 +90,7 @@ const Dashboard = ({ auth: { user } }) => {
           </Container>
         </div>
       </div>
-      <ProjectList />
+      {user === null ? <Spinner /> : <ProjectList />}
     </Fragment>
   );
 };
