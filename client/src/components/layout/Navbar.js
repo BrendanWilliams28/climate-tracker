@@ -151,6 +151,14 @@ export const Navbar = ({
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <MenuItem>
+        <FormControlLabel
+          control={
+            <SwitchControl onClick={toggleDarkMode} name='templateSwitch' />
+          }
+          label='Theme'
+        />
+      </MenuItem>
       <MenuItem component={Link} to='/dashboard'>
         <IconButton aria-label='Show My Cities' color='inherit'>
           <DashboardIcon />
@@ -186,7 +194,13 @@ export const Navbar = ({
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
                 <FormControlLabel
-                  control={<SwitchControl onClick={toggleDarkMode} />}
+                  control={
+                    <SwitchControl
+                      onClick={toggleDarkMode}
+                      name='templateSwitch'
+                    />
+                  }
+                  label='Theme'
                 />
 
                 <MenuItem component={Link} to='/dashboard'>
