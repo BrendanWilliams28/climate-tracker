@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/auth/Login';
@@ -6,8 +6,6 @@ import Routes from './components/routing/Routes';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Copyright from './components/layout/Copyright';
-
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //Redux
@@ -20,26 +18,55 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh'
+/*
+const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+const themeObject = React.useMemo(
+  () =>
+    createMuiTheme({
+      palette: {
+        type: prefersDarkMode ? 'dark' : 'light'
+      }
+    }),
+  [prefersDarkMode]
+);
+*/
+
+const themeObject = {
+  palette: {
+    type: 'light'
   }
-}));
+};
+const useDarkMode = () => {
+  const [theme, setTheme] = useState(themeObject);
+
+  const {
+    palette: { type }
+  } = theme;
+  const toggleDarkMode = () => {
+    const updatedTheme = {
+      ...theme,
+      palette: {
+        ...theme.palette,
+        type: type === 'light' ? 'dark' : 'light'
+      }
+    };
+    setTheme(updatedTheme);
+  };
+  return [theme, toggleDarkMode];
+};
 
 const App = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [theme, toggleDarkMode] = useDarkMode();
+  const themeConfig = createMuiTheme(theme);
 
-  const theme = React.useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          type: prefersDarkMode ? 'dark' : 'light'
-        }
-      }),
-    [prefersDarkMode]
-  );
+  const useStyles = makeStyles(theme => ({
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh'
+    }
+  }));
 
   const classes = useStyles();
 
@@ -52,11 +79,11 @@ const App = () => {
       <CssBaseline />
 
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={themeConfig}>
           <Router>
             <Fragment>
               <div>
-                <Navbar />
+                <Navbar toggleDarkMode={toggleDarkMode} />
                 <Switch>
                   <Route exact path='/' component={Landing} />
                   <Route component={Routes} />

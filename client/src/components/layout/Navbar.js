@@ -15,6 +15,8 @@ import Menu from '@material-ui/core/Menu';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Divider from '@material-ui/core/Divider';
+import { Switch as SwitchControl } from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const initialState = {
   name: '',
@@ -57,7 +59,8 @@ export const Navbar = ({
   auth: { isAuthenticated, loading },
   logout,
   user: { user, loading: userLoading },
-  getCurrentUser
+  getCurrentUser,
+  toggleDarkMode
 }) => {
   const classes = useStyles();
 
@@ -182,6 +185,10 @@ export const Navbar = ({
             <Fragment>
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
+                <FormControlLabel
+                  control={<SwitchControl onClick={toggleDarkMode} />}
+                />
+
                 <MenuItem component={Link} to='/dashboard'>
                   <IconButton aria-label='Show My Cities' color='inherit'>
                     <DashboardIcon />
