@@ -57,6 +57,10 @@ const whiteText = {
   color: '#ffffff'
 };
 
+const width100 = {
+  width: '100%'
+};
+
 const ClimateData = ({
   getProjectById,
   getIndicatorByCity,
@@ -135,7 +139,7 @@ const ClimateData = ({
           </div>
           <Container maxWidth='md'>
             <Grid container spacing={2} justify='center'>
-              <Grid item>
+              <Grid item style={width100}>
                 {Object.keys(indicatorByCity).length === 0 ||
                 indicatorByCityLoading ? (
                   <Fragment>
