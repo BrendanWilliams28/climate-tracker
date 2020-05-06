@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -63,15 +63,11 @@ export const Navbar = ({
   getCurrentUser,
   updateTheme,
   toggleDarkMode,
+  currentTheme,
 }) => {
   const classes = useStyles();
 
   const [userProfile, setUserProfile] = useState(initialState);
-  const [userComplete, setUserComplete] = useState(false);
-
-  const getCurrentUserHelper = useCallback(() => {
-    getCurrentUser();
-  }, [getCurrentUser]);
 
   useEffect(() => {
     if (isAuthenticated && user === null) getCurrentUser();
@@ -81,13 +77,23 @@ export const Navbar = ({
         if (key in userData) userData[key] = user[key];
       }
       setUserProfile(userData);
-      /*if (userData.selectedTheme === 'dark') {
-         toggleDarkMode();
-        }*/
-    }
-  }, [userLoading, getCurrentUser, user, isAuthenticated]);
 
-  const { name, email, avatar, selectedTheme } = userProfile;
+      //console.log('theme=' + currentTheme.palette.type);
+
+      if (userData.selectedTheme !== currentTheme.palette.type) {
+        toggleDarkMode();
+      }
+    }
+  }, [
+    userLoading,
+    getCurrentUser,
+    user,
+    isAuthenticated,
+    currentTheme.palette.type,
+    toggleDarkMode,
+  ]);
+
+  const { name, email, avatar } = userProfile;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -119,14 +125,10 @@ export const Navbar = ({
   };
 
   const handleThemeSwitch = (event) => {
-    console.log('theme=' + event.target.checked);
-
     if (event.target.checked) {
       updateTheme({ selectedTheme: 'dark' });
-      console.log('updated to dark');
     } else {
       updateTheme({ selectedTheme: 'light' });
-      console.log('updated to light');
     }
   };
 
@@ -227,7 +229,7 @@ export const Navbar = ({
                       onChange={handleThemeSwitch}
                       onClick={toggleDarkMode}
                       name='templateSwitch'
-                      //checked={selectedTheme === 'dark'}
+                      checked={currentTheme.palette.type === 'dark'}
                     />
                   }
                   label='Theme'

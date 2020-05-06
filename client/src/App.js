@@ -34,22 +34,22 @@ const themeObject = React.useMemo(
 
 const themeObject = {
   palette: {
-    type: 'light'
-  }
+    type: 'light',
+  },
 };
 const useDarkMode = () => {
   const [theme, setTheme] = useState(themeObject);
 
   const {
-    palette: { type }
+    palette: { type },
   } = theme;
   const toggleDarkMode = () => {
     const updatedTheme = {
       ...theme,
       palette: {
         ...theme.palette,
-        type: type === 'light' ? 'dark' : 'light'
-      }
+        type: type === 'light' ? 'dark' : 'light',
+      },
     };
     setTheme(updatedTheme);
   };
@@ -60,12 +60,12 @@ const App = () => {
   const [theme, toggleDarkMode] = useDarkMode();
   const themeConfig = createMuiTheme(theme);
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
       flexDirection: 'column',
-      minHeight: '100vh'
-    }
+      minHeight: '100vh',
+    },
   }));
 
   const classes = useStyles();
@@ -83,7 +83,7 @@ const App = () => {
           <Router>
             <Fragment>
               <div>
-                <Navbar toggleDarkMode={toggleDarkMode} />
+                <Navbar currentTheme={theme} toggleDarkMode={toggleDarkMode} />
                 <Switch>
                   <Route exact path='/' component={Landing} />
                   <Route component={Routes} />
