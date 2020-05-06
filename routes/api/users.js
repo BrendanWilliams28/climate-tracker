@@ -125,6 +125,41 @@ router.put(
   }
 );
 
+// @route    PUT api/users/theme
+// @desc     Edit a user
+// @access   Private
+router.put(
+  '/theme',
+  [
+    auth,
+    [
+      check('selectedTheme', 'Theme is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    let { selectedTheme } = req.body;
+    try {
+      const user = await User.findById(req.user.id);
+
+      user.selectedTheme = selectedTheme;
+
+      await user.save();
+
+      res.json({ msg: 'Theme updated' });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 // @route    PUT api/users/password
 // @desc     Edit a user's password
 // @access   Private

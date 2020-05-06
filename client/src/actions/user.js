@@ -9,41 +9,47 @@ import {
   CLEAR_USER,
   CLEAR_USERS,
   DELETE_USER,
-  LOGOUT
+  LOGOUT,
 } from './types';
 
 // Get current User
-export const getCurrentUser = () => async dispatch => {
+export const getCurrentUser = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/auth');
 
     dispatch({
       type: GET_USER,
-      payload: res.data
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
       type: USER_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 // Update profile
-export const updateProfile = (formData, history) => async dispatch => {
+export const updateProfile = (formData, history) => async (dispatch) => {
   try {
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     };
 
-    const res = await axios.put('/api/users', formData, config);
+    await axios.put('/api/users', formData, config);
 
+    /*
     dispatch({
       type: GET_USER,
       payload: res.data
     });
+    */
+    dispatch(getCurrentUser());
 
     dispatch(setAlert('Profile Updated', 'success'));
 
@@ -52,30 +58,62 @@ export const updateProfile = (formData, history) => async dispatch => {
     const errors = error.response.data.errors;
 
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'error')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
 
     dispatch({
       type: USER_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Update selected theme
+export const updateTheme = (formData) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    await axios.put('/api/users/theme', formData, config);
+
+    dispatch(getCurrentUser());
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+    }
+
+    dispatch({
+      type: USER_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 // Update password
-export const updatePassword = (formData, history) => async dispatch => {
+export const updatePassword = (formData, history) => async (dispatch) => {
   try {
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     };
 
     const res = await axios.put('/api/users/password', formData, config);
 
     dispatch({
       type: GET_USER,
-      payload: res.data
+      payload: res.data,
     });
 
     dispatch(setAlert('Password Updated', 'success'));
@@ -85,23 +123,26 @@ export const updatePassword = (formData, history) => async dispatch => {
     const errors = error.response.data.errors;
 
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'error')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
 
     dispatch({
       type: USER_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 // Reset password
-export const resetPassword = (formData, history) => async dispatch => {
+export const resetPassword = (formData, history) => async (dispatch) => {
   try {
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     };
 
     await axios.post('/api/mail/reset', formData, config);
@@ -115,13 +156,13 @@ export const resetPassword = (formData, history) => async dispatch => {
     const errors = error.response.data.errors;
 
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'error')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
   }
 };
 
 // Delete user & projects
-export const deleteUser = userId => async dispatch => {
+export const deleteUser = (userId) => async (dispatch) => {
   try {
     await axios.delete('/api/users');
 
@@ -129,7 +170,7 @@ export const deleteUser = userId => async dispatch => {
 
     dispatch({
       type: DELETE_USER,
-      payload: userId
+      payload: userId,
     });
 
     dispatch({ type: LOGOUT });
@@ -138,27 +179,33 @@ export const deleteUser = userId => async dispatch => {
   } catch (error) {
     dispatch({
       type: USER_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 // Get all users
-export const getUsers = () => async dispatch => {
+export const getUsers = () => async (dispatch) => {
   dispatch({
-    type: CLEAR_USERS
+    type: CLEAR_USERS,
   });
   try {
     const res = await axios.get('/api/users/list');
 
     dispatch({
       type: GET_USERS,
-      payload: res.data
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
       type: USERS_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };

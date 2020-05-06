@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -22,38 +22,38 @@ const initialState = {
   name: '',
   email: '',
   avatar: '',
-  selectedTheme: 'light',
+  selectedTheme: 'light'
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   grow: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   title: {
     display: 'none',
     [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+      display: 'block'
+    }
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   inputRoot: {
-    color: 'inherit',
+    color: 'inherit'
   },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
+      display: 'flex'
+    }
   },
   sectionMobile: {
     display: 'flex',
     [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
+      display: 'none'
+    }
+  }
 }));
 
 export const Navbar = ({
@@ -62,30 +62,30 @@ export const Navbar = ({
   user: { user, loading: userLoading },
   getCurrentUser,
   updateTheme,
-  toggleDarkMode,
+  toggleDarkMode
 }) => {
   const classes = useStyles();
 
   const [userProfile, setUserProfile] = useState(initialState);
   const [userComplete, setUserComplete] = useState(false);
 
-  const getCurrentUserHelper = useCallback(() => {
-    getCurrentUser();
-  }, [getCurrentUser]);
-
   useEffect(() => {
-    if (isAuthenticated && user === null) getCurrentUser();
-    if (!userLoading) {
-      const userData = { ...initialState };
-      for (const key in user) {
-        if (key in userData) userData[key] = user[key];
-      }
-      setUserProfile(userData);
-      /*if (userData.selectedTheme === 'dark') {
+    if (!userComplete) {
+      if (isAuthenticated) getCurrentUser();
+      if (!userLoading) {
+        const userData = { ...initialState };
+        for (const key in user) {
+          if (key in userData) userData[key] = user[key];
+        }
+        setUserProfile(userData);
+        setUserComplete(true);
+        console.log('test');
+        /*if (userData.selectedTheme === 'dark') {
          toggleDarkMode();
         }*/
+      }
     }
-  }, [userLoading, getCurrentUser, user, isAuthenticated]);
+  }, [userComplete, userLoading, getCurrentUser, user, isAuthenticated]);
 
   const { name, email, avatar, selectedTheme } = userProfile;
 
@@ -95,7 +95,7 @@ export const Navbar = ({
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
+  const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -114,11 +114,11 @@ export const Navbar = ({
     logout();
   };
 
-  const handleMobileMenuOpen = (event) => {
+  const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleThemeSwitch = (event) => {
+  const handleThemeSwitch = event => {
     console.log('theme=' + event.target.checked);
 
     if (event.target.checked) {
@@ -277,16 +277,16 @@ Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
   getCurrentUser: PropTypes.func.isRequired,
   updateTheme: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
-  user: state.user,
+  user: state.user
 });
 
 export default connect(mapStateToProps, {
   logout,
   getCurrentUser,
-  updateTheme,
+  updateTheme
 })(Navbar);
