@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
@@ -14,24 +14,24 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const ChangePassword = ({ setAlert, updatePassword, history }) => {
@@ -39,15 +39,15 @@ const ChangePassword = ({ setAlert, updatePassword, history }) => {
 
   const [formData, setFormData] = useState({
     password: '',
-    password2: ''
+    password2: '',
   });
 
   const { password, password2 } = formData;
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
       setAlert('Passwords do not match', 'error');
@@ -79,7 +79,7 @@ const ChangePassword = ({ setAlert, updatePassword, history }) => {
                 autoComplete='current-password'
                 minLength='6'
                 value={password}
-                onChange={e => onChange(e)}
+                onChange={(e) => onChange(e)}
                 required
               />
             </Grid>
@@ -93,7 +93,7 @@ const ChangePassword = ({ setAlert, updatePassword, history }) => {
                 id='password2'
                 minLength='6'
                 value={password2}
-                onChange={e => onChange(e)}
+                onChange={(e) => onChange(e)}
                 required
               />
             </Grid>
@@ -102,7 +102,7 @@ const ChangePassword = ({ setAlert, updatePassword, history }) => {
           <br />
           <Grid container spacing={2} justify='center'>
             <Grid item>
-              <Button href='/dashboard' variant='contained'>
+              <Button component={Link} to={'/dashboard'} variant='contained'>
                 Cancel
               </Button>
             </Grid>
@@ -120,7 +120,7 @@ const ChangePassword = ({ setAlert, updatePassword, history }) => {
 
 ChangePassword.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  updatePassword: PropTypes.func.isRequired
+  updatePassword: PropTypes.func.isRequired,
 };
 
 export default connect(null, { setAlert, updatePassword })(

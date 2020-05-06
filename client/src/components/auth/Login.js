@@ -7,16 +7,17 @@ import logo from '../../img/logo_big.png';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh'
+    height: '100vh',
   },
   image: {
     backgroundImage:
@@ -27,25 +28,25 @@ const useStyles = makeStyles(theme => ({
         ? theme.palette.grey[50]
         : theme.palette.grey[900],
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
   },
   paper: {
     margin: theme.spacing(8, 4),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 export const Login = ({ login, isAuthenticated }) => {
@@ -53,15 +54,15 @@ export const Login = ({ login, isAuthenticated }) => {
 
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
 
   const { email, password } = formData;
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     login(email, password);
@@ -82,7 +83,7 @@ export const Login = ({ login, isAuthenticated }) => {
           <Typography component='h1' variant='h5'>
             Sign in
           </Typography>
-          <form className={classes.form} onSubmit={e => onSubmit(e)}>
+          <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
             <TextField
               variant='outlined'
               margin='normal'
@@ -94,7 +95,7 @@ export const Login = ({ login, isAuthenticated }) => {
               autoComplete='email'
               autoFocus
               value={email}
-              onChange={e => onChange(e)}
+              onChange={(e) => onChange(e)}
               required
             />
             <TextField
@@ -108,7 +109,7 @@ export const Login = ({ login, isAuthenticated }) => {
               autoComplete='current-password'
               minLength='6'
               value={password}
-              onChange={e => onChange(e)}
+              onChange={(e) => onChange(e)}
               required
             />
 
@@ -123,12 +124,16 @@ export const Login = ({ login, isAuthenticated }) => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href='/forgot-password' variant='body2'>
+                <Link
+                  component={RouterLink}
+                  to='/forgot-password'
+                  variant='body2'
+                >
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href='/register' variant='body2'>
+                <Link component={RouterLink} to='/register' variant='body2'>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -155,11 +160,11 @@ export const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { login })(Login);

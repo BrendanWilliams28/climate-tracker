@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import LocationSearchInput from './LocationSearchInput';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
@@ -15,24 +15,24 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useScript } from '../../hooks/useScript';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const CreateProject = ({ createProject, history }) => {
@@ -45,10 +45,10 @@ const CreateProject = ({ createProject, history }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    city: ''
+    city: '',
   });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     createProject(formData, history);
   };
@@ -71,7 +71,7 @@ const CreateProject = ({ createProject, history }) => {
           </Typography>
           <form
             className={classes.form}
-            onSubmit={e => onSubmit(e)}
+            onSubmit={(e) => onSubmit(e)}
             autoComplete='off'
           >
             <Grid container spacing={2}>
@@ -89,7 +89,7 @@ const CreateProject = ({ createProject, history }) => {
             <br />
             <Grid container spacing={2} justify='center'>
               <Grid item>
-                <Button href='/dashboard' variant='contained'>
+                <Button component={Link} to={'/dashboard'} variant='contained'>
                   Cancel
                 </Button>
               </Grid>
@@ -107,7 +107,7 @@ const CreateProject = ({ createProject, history }) => {
 };
 
 CreateProject.propTypes = {
-  createProject: PropTypes.func.isRequired
+  createProject: PropTypes.func.isRequired,
 };
 
 export default connect(null, { createProject })(withRouter(CreateProject));

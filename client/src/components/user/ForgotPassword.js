@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
@@ -14,39 +14,39 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const ForgotPassword = ({ setAlert, resetPassword, history }) => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
-    email: ''
+    email: '',
   });
 
   const { email } = formData;
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     resetPassword(formData, history);
   };
@@ -74,7 +74,7 @@ const ForgotPassword = ({ setAlert, resetPassword, history }) => {
                 name='email'
                 autoComplete='email'
                 value={email}
-                onChange={e => onChange(e)}
+                onChange={(e) => onChange(e)}
                 required
               />
             </Grid>
@@ -83,7 +83,7 @@ const ForgotPassword = ({ setAlert, resetPassword, history }) => {
           <br />
           <Grid container spacing={2} justify='center'>
             <Grid item>
-              <Button href='/' variant='contained'>
+              <Button component={Link} to={'/'} variant='contained'>
                 Go Back
               </Button>
             </Grid>
@@ -101,7 +101,7 @@ const ForgotPassword = ({ setAlert, resetPassword, history }) => {
 
 ForgotPassword.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  resetPassword: PropTypes.func.isRequired
+  resetPassword: PropTypes.func.isRequired,
 };
 
 export default connect(null, { setAlert, resetPassword })(

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProjectList from '../projects/ProjectList';
@@ -10,9 +11,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Spinner from '../layout/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   heroContent: {
     backgroundImage:
@@ -20,10 +21,10 @@ const useStyles = makeStyles(theme => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center center',
     backgroundSize: 'cover',
-    backgroundAttachment: 'fixed'
+    backgroundAttachment: 'fixed',
   },
   heroButtons: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(4),
   },
   darkOverlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
@@ -31,16 +32,16 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     width: '100%',
     height: '100%',
-    padding: theme.spacing(8, 0, 6)
+    padding: theme.spacing(8, 0, 6),
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6)
-  }
+    padding: theme.spacing(6),
+  },
 }));
 
 const whiteText = {
-  color: '#ffffff'
+  color: '#ffffff',
 };
 
 const Dashboard = ({ auth: { user, loading } }) => {
@@ -80,7 +81,8 @@ const Dashboard = ({ auth: { user, loading } }) => {
                   <Button
                     variant='contained'
                     color='primary'
-                    href='/create-project'
+                    component={Link}
+                    to={'/create-project'}
                   >
                     Add City
                   </Button>
@@ -96,11 +98,11 @@ const Dashboard = ({ auth: { user, loading } }) => {
 };
 
 Dashboard.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps)(Dashboard);

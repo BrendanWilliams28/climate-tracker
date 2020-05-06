@@ -18,20 +18,6 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-/*
-const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-const themeObject = React.useMemo(
-  () =>
-    createMuiTheme({
-      palette: {
-        type: prefersDarkMode ? 'dark' : 'light'
-      }
-    }),
-  [prefersDarkMode]
-);
-*/
-
 const themeObject = {
   palette: {
     type: 'light',

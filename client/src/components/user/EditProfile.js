@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateProfile, getCurrentUser, deleteUser } from '../../actions/user';
@@ -17,27 +17,27 @@ import Container from '@material-ui/core/Container';
 const initialState = {
   name: '',
   email: '',
-  avatar: ''
+  avatar: '',
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const EditProfile = ({
@@ -45,7 +45,7 @@ const EditProfile = ({
   updateProfile,
   getCurrentUser,
   deleteUser,
-  history
+  history,
 }) => {
   const classes = useStyles();
 
@@ -66,10 +66,10 @@ const EditProfile = ({
 
   const { name, email, avatar } = formData;
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     updateProfile(formData, history);
   };
@@ -121,7 +121,11 @@ const EditProfile = ({
           <br />
           <Grid container spacing={2} justify='center'>
             <Grid item>
-              <Button href='/dashboard' variant='contained'>
+              <Button
+                component={RouterLink}
+                to={'/dashboard'}
+                variant='contained'
+              >
                 Cancel
               </Button>
             </Grid>
@@ -169,15 +173,15 @@ EditProfile.propTypes = {
   updateProfile: PropTypes.func.isRequired,
   getCurrentUser: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 export default connect(mapStateToProps, {
   updateProfile,
   getCurrentUser,
-  deleteUser
+  deleteUser,
 })(withRouter(EditProfile));
