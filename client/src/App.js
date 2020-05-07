@@ -57,8 +57,10 @@ const App = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    setAuthToken(localStorage.token);
-    store.dispatch(loadUser());
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+      store.dispatch(loadUser());
+    }
   }, []);
 
   return (

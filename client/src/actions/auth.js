@@ -96,6 +96,14 @@ export const login = (email, password) => async (dispatch) => {
 
 // Login User for Reset Password
 export const loginReset = (resetPassword, history) => async (dispatch) => {
+  dispatch({ type: CLEAR_USER });
+  dispatch({ type: CLEAR_USERS });
+  dispatch({ type: CLEAR_PROJECT });
+  dispatch({ type: CLEAR_INDICATOR_BY_CITY });
+  dispatch({ type: CLEAR_INDICATOR_LIST });
+  dispatch({ type: CLEAR_CLIMATE_SOURCES });
+  dispatch({ type: LOGOUT });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -121,9 +129,18 @@ export const loginReset = (resetPassword, history) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
+
     dispatch({
       type: LOGIN_FAIL,
     });
+
+    dispatch({ type: CLEAR_USER });
+    dispatch({ type: CLEAR_USERS });
+    dispatch({ type: CLEAR_PROJECT });
+    dispatch({ type: CLEAR_INDICATOR_BY_CITY });
+    dispatch({ type: CLEAR_INDICATOR_LIST });
+    dispatch({ type: CLEAR_CLIMATE_SOURCES });
+    dispatch({ type: LOGOUT });
 
     history.push('/');
   }
