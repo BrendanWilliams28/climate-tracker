@@ -48,15 +48,16 @@ router.post(
 
       // See if user exists
       let user = await User.findOne({ email });
-      const newPassword = randomPassword(6);
-
-      // Save reset password:
-      user.reset = newPassword;
-      await user.save();
 
       if (user === null) {
         return res.status(400).json({ errors: [{ msg: 'Email not found' }] });
       } else {
+        const newPassword = randomPassword(6);
+
+        // Save reset password:
+        user.reset = newPassword;
+        await user.save();
+
         let mailOptions = {
           from: config.get('mailUser'),
           to: email,

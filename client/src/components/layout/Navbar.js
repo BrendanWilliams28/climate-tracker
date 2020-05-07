@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useLocation, withRouter } from 'react-router-dom';
+import { Link, useLocation, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import { getCurrentUser, updateTheme } from '../../actions/user';
@@ -212,6 +212,11 @@ export const Navbar = ({
   );
 
   const location = useLocation();
+
+  // Redirect if not logged in
+  if (!isAuthenticated) {
+    return <Redirect to='/' />;
+  }
 
   return location.pathname === '/login' || location.pathname === '/' ? null : (
     <div className={classes.grow}>
