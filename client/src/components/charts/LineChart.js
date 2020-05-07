@@ -1,8 +1,13 @@
 import React, { Fragment } from 'react';
 import { Line } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
+import { useTheme } from '@material-ui/core/styles';
 
 const LineChart = ({ data }) => {
+  let fontColor = '#7c7c7f';
+  const theme = useTheme();
+  if (theme.palette.type === 'dark') fontColor = '#f8f8ff';
+
   let chartData = {};
 
   let cityData = {};
@@ -30,7 +35,7 @@ const LineChart = ({ data }) => {
     let dataPointsMin = [];
     let dataPointsMax = [];
 
-    chartData.labels.forEach(dataPoint => {
+    chartData.labels.forEach((dataPoint) => {
       dataPointsAverage.push(data.data[dataPoint].avg.toFixed(1));
       dataPointsMin.push(data.data[dataPoint].min.toFixed(1));
       dataPointsMax.push(data.data[dataPoint].max.toFixed(1));
@@ -44,7 +49,7 @@ const LineChart = ({ data }) => {
         pointHoverRadius: 10,
         backgroundColor: 'rgba(102,153,0,0.4)',
         borderColor: 'rgba(51,153,0,1)',
-        data: dataPointsMin
+        data: dataPointsMin,
       },
       {
         label: 'Average',
@@ -53,7 +58,7 @@ const LineChart = ({ data }) => {
         pointHoverRadius: 10,
         backgroundColor: 'rgba(255,0,0,0.4)',
         borderColor: 'rgba(204,0,0,1)',
-        data: dataPointsAverage
+        data: dataPointsAverage,
       },
       {
         label: 'Maximum',
@@ -62,25 +67,26 @@ const LineChart = ({ data }) => {
         pointHoverRadius: 10,
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,1)',
-        data: dataPointsMax
-      }
+        data: dataPointsMax,
+      },
     ];
 
     chartOptions = {
       responsive: true,
       tooltips: {
         mode: 'index',
-        intersect: false
+        intersect: false,
       },
       hover: {
         mode: 'index',
-        intersect: false
+        intersect: false,
       },
       legend: {
         display: true,
         labels: {
-          fontStyle: 'bold'
-        }
+          fontStyle: 'bold',
+          fontColor: fontColor,
+        },
       },
       scales: {
         xAxes: [
@@ -89,9 +95,10 @@ const LineChart = ({ data }) => {
             scaleLabel: {
               display: true,
               labelString: 'Years',
-              fontStyle: 'bold'
-            }
-          }
+              fontStyle: 'bold',
+              fontColor: fontColor,
+            },
+          },
         ],
         yAxes: [
           {
@@ -99,11 +106,12 @@ const LineChart = ({ data }) => {
             scaleLabel: {
               display: true,
               labelString: `Units: ${metaData.units}`,
-              fontStyle: 'bold'
-            }
-          }
-        ]
-      }
+              fontStyle: 'bold',
+              fontColor: fontColor,
+            },
+          },
+        ],
+      },
     };
   }
 
@@ -121,7 +129,7 @@ const LineChart = ({ data }) => {
 };
 
 LineChart.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
 };
 
 export default LineChart;

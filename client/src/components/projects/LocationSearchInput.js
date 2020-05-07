@@ -11,11 +11,11 @@ class LocationSearchInput extends React.Component {
       : (this.state = { address: '' });
   }
 
-  handleChange = address => {
+  handleChange = (address) => {
     this.setState({ address });
   };
 
-  handleSelect = address => {
+  handleSelect = (address) => {
     const setFormLocation = this.props.setFormLocation;
     if (address) {
       let parsedLoc = address.split(', ');
@@ -33,7 +33,7 @@ class LocationSearchInput extends React.Component {
         onSelect={this.handleSelect}
         searchOptions={{
           types: ['(cities)'],
-          componentRestrictions: { country: 'us' }
+          componentRestrictions: { country: 'us' },
         }}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
@@ -44,24 +44,32 @@ class LocationSearchInput extends React.Component {
               {...getInputProps({
                 placeholder: 'City, State',
                 className: 'location-search-input',
-                name: 'project-loc'
+                name: 'project-loc',
               })}
             />
             <div className='autocomplete-dropdown-container'>
               {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
+              {suggestions.map((suggestion) => {
                 const className = suggestion.active
                   ? 'suggestion-item--active'
                   : 'suggestion-item';
                 // inline style for demonstration purpose
                 const style = suggestion.active
-                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                  ? {
+                      backgroundColor: '#fafafa',
+                      cursor: 'pointer',
+                      color: '#000000',
+                    }
+                  : {
+                      backgroundColor: '#ffffff',
+                      cursor: 'pointer',
+                      color: '#000000',
+                    };
                 return (
                   <div
                     {...getSuggestionItemProps(suggestion, {
                       className,
-                      style
+                      style,
                     })}
                   >
                     <span>{suggestion.description}</span>
