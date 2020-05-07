@@ -109,12 +109,7 @@ export const updatePassword = (formData, history) => async (dispatch) => {
       },
     };
 
-    const res = await axios.put('/api/users/password', formData, config);
-
-    dispatch({
-      type: GET_USER,
-      payload: res.data,
-    });
+    await axios.put('/api/users/password', formData, config);
 
     dispatch(setAlert('Password Updated', 'success'));
 
