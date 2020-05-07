@@ -12,12 +12,12 @@ let transporter = nodemailer.createTransport({
   secure: false, // use TLS
   auth: {
     user: config.get('mailUser'),
-    pass: config.get('mailPass')
+    pass: config.get('mailPass'),
   },
   tls: {
     // do not fail on invalid certs
-    rejectUnauthorized: false
-  }
+    rejectUnauthorized: false,
+  },
 });
 
 function randomPassword(length) {
@@ -60,17 +60,17 @@ router.post(
         let mailOptions = {
           from: config.get('mailUser'),
           to: email,
-          subject: 'Climate Tracker - Password Request',
+          subject: 'Climate Hub - Password Request',
           html:
             'Hi ' +
             user.name +
             ', <p>We received a password reset request for your account</p> <p><a href=http://localhost:3000/reset-password/' +
             newPassword +
             ">Click here to reset your password</a></p><p>If you didn't request a new password, you may ignore this email.</p>" +
-            '<p>This link will only be active until you change your password.</p>'
+            '<p>This link will only be active until you change your password.</p>',
         };
 
-        transporter.sendMail(mailOptions, function(error, info) {
+        transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
             res.status(500).send('Server error');
           } else {
