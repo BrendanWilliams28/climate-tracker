@@ -4,17 +4,18 @@ import {
   GET_USERS,
   USERS_ERROR,
   CLEAR_USER,
-  DELETE_USER
+  CLEAR_USERS,
+  DELETE_USER,
 } from '../actions/types';
 
 const initialState = {
   users: [],
   user: null,
   loading: true,
-  error: {}
+  error: {},
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -22,37 +23,44 @@ export default function(state = initialState, action) {
       return {
         ...state,
         user: payload,
-        loading: false
+        loading: false,
       };
     case USER_ERROR:
       return {
         ...state,
         error: payload,
-        loading: false
+        loading: false,
       };
     case GET_USERS:
       return {
         ...state,
         users: payload,
-        loading: false
+        loading: false,
       };
     case USERS_ERROR:
       return {
         ...state,
         error: payload,
-        loading: false
+        loading: false,
       };
     case CLEAR_USER:
       return {
         ...state,
         user: null,
-        loading: false
+        loading: true,
+      };
+    case CLEAR_USERS:
+      return {
+        ...state,
+        users: [],
+        user: null,
+        loading: true,
       };
     case DELETE_USER:
       return {
         ...state,
-        users: state.users.filter(user => user._id !== payload),
-        loading: false
+        users: state.users.filter((user) => user._id !== payload),
+        loading: false,
       };
     default:
       return state;

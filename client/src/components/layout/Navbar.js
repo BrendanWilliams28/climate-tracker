@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import { getCurrentUser, updateTheme } from '../../actions/user';
@@ -64,6 +64,7 @@ export const Navbar = ({
   updateTheme,
   toggleDarkMode,
   currentTheme,
+  history,
 }) => {
   const classes = useStyles();
 
@@ -77,8 +78,6 @@ export const Navbar = ({
         if (key in userData) userData[key] = user[key];
       }
       setUserProfile(userData);
-
-      //console.log('theme=' + currentTheme.palette.type);
 
       if (userData.selectedTheme !== currentTheme.palette.type) {
         toggleDarkMode();
@@ -117,7 +116,9 @@ export const Navbar = ({
   const handleMenuCloseAndLogout = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    logout();
+
+    setUserProfile(initialState);
+    logout(history);
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -180,9 +181,10 @@ export const Navbar = ({
           <FormControlLabel
             control={
               <SwitchControl
+                onChange={handleThemeSwitch}
                 onClick={toggleDarkMode}
                 name='templateSwitch'
-                //checked={selectedTheme === 'dark'}
+                checked={currentTheme.palette.type === 'dark'}
               />
             }
             label='Theme'
@@ -291,4 +293,4 @@ export default connect(mapStateToProps, {
   logout,
   getCurrentUser,
   updateTheme,
-})(Navbar);
+})(withRouter(Navbar));

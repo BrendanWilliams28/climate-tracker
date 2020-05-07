@@ -9,19 +9,15 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_USER,
+  CLEAR_USERS,
   CLEAR_PROJECT,
   CLEAR_INDICATOR_BY_CITY,
   CLEAR_CLIMATE_SOURCES,
   CLEAR_INDICATOR_LIST,
 } from './types';
-import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
-
   try {
     const res = await axios.get('/api/auth');
 
@@ -134,11 +130,14 @@ export const loginReset = (resetPassword, history) => async (dispatch) => {
 };
 
 // Logout / Clear Profile
-export const logout = () => (dispatch) => {
+export const logout = (history) => (dispatch) => {
   dispatch({ type: CLEAR_USER });
+  dispatch({ type: CLEAR_USERS });
   dispatch({ type: CLEAR_PROJECT });
   dispatch({ type: CLEAR_INDICATOR_BY_CITY });
   dispatch({ type: CLEAR_INDICATOR_LIST });
   dispatch({ type: CLEAR_CLIMATE_SOURCES });
   dispatch({ type: LOGOUT });
+
+  history.push('/');
 };
