@@ -17,20 +17,15 @@ import Divider from '@material-ui/core/Divider';
 import { useMounted } from '../../hooks/useMounted';
 import ClimateSources from './ClimateSources';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   heroContent: {
-    backgroundImage:
-      'url(https://source.unsplash.com/featured/?nature,glacier)',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-    backgroundSize: 'cover',
-    backgroundAttachment: 'fixed'
+    /* styled with backgroundImageSrc below */
   },
   heroButtons: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(4),
   },
   darkOverlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
@@ -38,15 +33,15 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     width: '100%',
     height: '100%',
-    padding: theme.spacing(8, 0, 6)
+    padding: theme.spacing(8, 0, 6),
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 function sliderValuetext(value) {
@@ -54,11 +49,11 @@ function sliderValuetext(value) {
 }
 
 const whiteText = {
-  color: '#ffffff'
+  color: '#ffffff',
 };
 
 const width100 = {
-  width: '100%'
+  width: '100%',
 };
 
 const ClimateData = ({
@@ -67,7 +62,7 @@ const ClimateData = ({
   project: { project, loading },
   indicatorByCity: { indicatorByCity, loading: indicatorByCityLoading },
   auth,
-  match
+  match,
 }) => {
   const classes = useStyles();
 
@@ -112,6 +107,21 @@ const ClimateData = ({
     );
   };
 
+  let backgroundImageSrc = undefined;
+  if (project !== null && !loading) {
+    let cityName = project.city.split(',');
+
+    cityName[0] = cityName[0].replace(' ', '%20');
+
+    backgroundImageSrc = {
+      backgroundImage: `url(https://source.unsplash.com/featured/?${cityName[0]},city)`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center center',
+      backgroundSize: 'cover',
+      backgroundAttachment: 'fixed',
+    };
+  }
+
   return (
     <Fragment>
       <CssBaseline />
@@ -121,7 +131,7 @@ const ClimateData = ({
       ) : (
         <Fragment>
           {/* Hero unit */}
-          <div className={classes.heroContent}>
+          <div style={backgroundImageSrc}>
             <div className={classes.darkOverlay}>
               <Container maxWidth='md'>
                 <Typography
@@ -205,13 +215,13 @@ ClimateData.propTypes = {
   getIndicatorByCity: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
   indicatorByCity: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   project: state.projects,
   indicatorByCity: state.climate,
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getProjectById, getIndicatorByCity })(
