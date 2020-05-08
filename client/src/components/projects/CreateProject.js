@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useScript } from '../../hooks/useScript';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,6 +37,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateProject = ({ createProject, history }) => {
+  let autoCompleteFontStyle = {
+    fontColor: '#000000',
+    backgroundColor: '#ffffff',
+    backgroundColorActive: '#fafafa',
+  };
+
+  const theme = useTheme();
+  if (theme.palette.type === 'dark') {
+    autoCompleteFontStyle.fontColor = '#ffffff';
+    autoCompleteFontStyle.backgroundColor = '#303030';
+    autoCompleteFontStyle.backgroundColorActive = '#292929';
+  }
+
   const classes = useStyles();
 
   const [scriptLoaded, scriptError] = useScript(
@@ -78,7 +92,10 @@ const CreateProject = ({ createProject, history }) => {
               <Grid item xs={12}>
                 {scriptLoaded && !scriptError ? (
                   <div className='form-group'>
-                    <LocationSearchInput setFormLocation={setFormLocation} />
+                    <LocationSearchInput
+                      setFormLocation={setFormLocation}
+                      autoCompleteFontStyle={autoCompleteFontStyle}
+                    />
                   </div>
                 ) : (
                   <Spinner />
