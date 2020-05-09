@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const config = require('config');
 const axios = require('axios');
+const _ = require('lodash');
 
 const User = require('../../models/User');
 const Project = require('../../models/Project');
@@ -13,16 +14,9 @@ const Project = require('../../models/Project');
 // @access  Private
 router.post(
   '/',
-  [
-    auth,
-    [
-      check('city', 'City is required')
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check('city', 'City is required').not().isEmpty()]],
   async (req, res) => {
-    const errors = validationResult(req);
+    let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -31,19 +25,28 @@ router.post(
 
     // Get City ID
     let cityId = null;
+
     let location = city.split(', ');
     try {
       const response = await axios({
         method: 'get',
         url: 'https://app.climate.azavea.com/api/city',
         headers: {
-          Authorization: config.get('climateAuth')
+          Authorization: config.get('climateAuth'),
         },
         params: {
           name: location[0],
-          admin: location[1]
-        }
+          admin: location[1],
+        },
       });
+
+      if (!response.data.features[0]) {
+        return res.status(400).json({
+          errors: [
+            { msg: 'Sorry, this city is not in our climate database yet.' },
+          ],
+        });
+      }
 
       cityId = response.data.features[0].id;
     } catch (error) {
@@ -57,8 +60,8 @@ router.post(
         method: 'get',
         url: 'https://app.climate.azavea.com/api/scenario',
         headers: {
-          Authorization: config.get('climateAuth')
-        }
+          Authorization: config.get('climateAuth'),
+        },
       });
 
       scenario = response.data[2].name;
@@ -74,14 +77,14 @@ router.post(
         method: 'get',
         url: 'https://app.climate.azavea.com/api/dataset',
         headers: {
-          Authorization: config.get('climateAuth')
-        }
+          Authorization: config.get('climateAuth'),
+        },
       });
 
       dataSet = response.data[1].name;
       let tempModels = response.data[1].models;
-      dataModels = tempModels.map(el => ({
-        name: el
+      dataModels = tempModels.map((el) => ({
+        name: el,
       }));
     } catch (error) {
       console.error(error);
@@ -97,7 +100,7 @@ router.post(
         city,
         scenario,
         dataSet,
-        dataModels
+        dataModels,
       });
 
       const project = await newProject.save();
@@ -115,14 +118,7 @@ router.post(
 // @access   Private
 router.put(
   '/:id',
-  [
-    auth,
-    [
-      check('city', 'City is required')
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check('city', 'City is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -146,12 +142,12 @@ router.put(
           method: 'get',
           url: 'https://app.climate.azavea.com/api/city',
           headers: {
-            Authorization: config.get('climateAuth')
+            Authorization: config.get('climateAuth'),
           },
           params: {
             name: location[0],
-            admin: location[1]
-          }
+            admin: location[1],
+          },
         });
 
         cityId = response.data.features[0].id;
@@ -202,7 +198,7 @@ router.get('/', auth, async (req, res) => {
 router.get('/user', auth, async (req, res) => {
   try {
     const projects = await Project.find({ user: req.user.id }).sort({
-      city: 1
+      city: 1,
     });
 
     if (!projects) {
@@ -247,7 +243,7 @@ router.get('/:id', auth, async (req, res) => {
 router.get('/user/:user_id', auth, async (req, res) => {
   try {
     const projects = await Project.find({
-      user: req.params.user_id
+      user: req.params.user_id,
     }).populate('users', ['name', 'email']);
 
     if (!projects)
