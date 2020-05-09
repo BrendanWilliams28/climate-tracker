@@ -9,14 +9,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1, 'auto'),
-    minWidth: 120
+    minWidth: 120,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const IndicatorList = ({
@@ -27,7 +27,7 @@ const IndicatorList = ({
   cityId,
   defaultValue,
   startYear,
-  endYear
+  endYear,
 }) => {
   const classes = useStyles();
 
@@ -35,8 +35,9 @@ const IndicatorList = ({
     if (indicatorList.length === 0) getIndicatorList();
   }, [getIndicatorList, indicatorList.length]);
 
-  const setIndicator = indicator => {
-    getIndicatorByCity(cityId, undefined, indicator, startYear, endYear);
+  const setIndicator = (indicator) => {
+    if (indicator)
+      getIndicatorByCity(cityId, undefined, indicator, startYear, endYear);
   };
 
   return loading ? (
@@ -52,15 +53,12 @@ const IndicatorList = ({
             labelId='demo-simple-select-outlined-label'
             id='demo-simple-select-outlined'
             defaultValue={defaultValue}
-            onChange={event => setIndicator(event.target.value)}
+            onChange={(event) => setIndicator(event.target.value)}
             label='Climate Indicator'
           >
-            <MenuItem key='' value=''>
-              <em>Select</em>
-            </MenuItem>
             {indicatorList
-              .filter(indicator => !indicator.name.includes('threshold'))
-              .map(indicator => (
+              .filter((indicator) => !indicator.name.includes('threshold'))
+              .map((indicator) => (
                 <MenuItem key={indicator.name} value={indicator.name}>
                   {indicator.label}
                 </MenuItem>
@@ -79,14 +77,14 @@ IndicatorList.propTypes = {
   climateList: PropTypes.object.isRequired,
   cityId: PropTypes.number.isRequired,
   startYear: PropTypes.number.isRequired,
-  endYear: PropTypes.number.isRequired
+  endYear: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  climateList: state.climate
+  climateList: state.climate,
 });
 export default connect(mapStateToProps, {
   getIndicatorList,
-  getIndicatorByCity
+  getIndicatorByCity,
 })(IndicatorList);
